@@ -1,27 +1,35 @@
-FROM leptos-builder-gnu as builder
+FROM rustlang/rust:nightly-bullseye AS builder
 
-WORKDIR /work
+RUN wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN cp cargo-binstall /usr/local/cargo/bin
 
+RUN cargo binstall cargo-leptos -y
+
+RUN rustup target add wasm32-unknown-unknown
+
+RUN mkdir -p /app
+WORKDIR /app
 COPY . .
 
-RUN mkdir -p target/site
-RUN cargo leptos build --release
 
-FROM scratch as app
+RUN cargo leptos build --release -vv
 
-ENV LEPTOS_OUTPUT_NAME=personal_site
-ENV LEPTOS_SITE_ROOT=site
-ENV LEPTOS_SITE_PKG_DIR=pkg
-ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
-ENV LEPTOS_RELOAD_PORT=3001
-
-USER 10001
-
+FROM debian:bookworm-slim AS runtime
 WORKDIR /app
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
 
-COPY --chown=10001:10001 --from=builder /work/target/site/ ./site/
-COPY --chown=10001:10001 --from=builder /work/target/server/release/server .
+COPY --from=builder /app/target/release/personal_site /app/
+COPY --from=builder /app/target/site /app/site
+# COPY --from=builder /app/Cargo.toml /app/
 
-EXPOSE 3000:3000
+ENV RUST_LOG="info"
+ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
+ENV LEPTOS_SITE_ROOT="site"
+EXPOSE 3000
 
-ENTRYPOINT [ "/app/personal_site" ]
+CMD ["/app/personal_site"]
