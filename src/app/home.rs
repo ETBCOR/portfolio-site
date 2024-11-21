@@ -1,4 +1,3 @@
-use crate::app::music::MusicLinkWindow;
 use crate::app::{
     AdWindow, Footer, GoatCounter, JohnWindow, LinkWindow, LoadingWindow, LoadingWindowVariant,
     Webring, WebringWindow, Window, WindowContent, WindowPos,
@@ -75,7 +74,7 @@ fn HomePage(
     view! {
         <LoadingWindow   pos=loading_pos   size=(225, 170) hidden=loading_hidden   z_idx=z_idx variant=LoadingWindowVariant::Default/>
         <LinkWindow      pos=portfolio_pos size=(170, 220) hidden=portfolio_hidden z_idx=z_idx id="portfolio-link-win" title="Portfolio".to_string() bg_img="/assets/file-icon.svg" src="/portfolio"/>
-        <MusicLinkWindow pos=music_pos     size=(225, 225) hidden=music_hidden     z_idx=z_idx/> // music link window
+        <LinkWindow      pos=music_pos     size=(225, 225) hidden=music_hidden     z_idx=z_idx id="my-music-win" title="My Music".to_string() bg_img="/assets/my-music.png" src="/itan"/>
         <LinkWindow      pos=tp_pos        size=(170, 178) hidden=tp_hidden        z_idx=z_idx id="tp-link-win"        title="toki pona".to_string() bg_img="/assets/itan.svg" src="/tp" diag_tp=true/>
         <WebringWindow   pos=webring_pos   size=(430, 70)  hidden=webring_hidden   z_idx=z_idx webring=Webring::Bucket/>
         <AdWindow        pos=ad_pos        size=(200, 100) hidden=ad_hidden        z_idx=z_idx/>

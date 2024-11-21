@@ -5,30 +5,30 @@ use crate::app::{
 use leptos::*;
 
 #[component]
-pub fn MusicPage() -> impl IntoView {
+pub fn PicksPage() -> impl IntoView {
     let loading_hidden = create_rw_signal(false);
     let my_music_hidden = create_rw_signal(false);
     let spotify_hidden = create_rw_signal(false);
     let john_hidden = create_rw_signal(false);
-    // let faves_hidden = create_rw_signal(false);
+    let faves_hidden = create_rw_signal(false);
 
     let footer_items = vec![
         ("\"Inspiration\"", loading_hidden),
         ("My Music", my_music_hidden),
         ("Playlists", spotify_hidden),
         ("Johnvertisement", john_hidden),
-        // ("My Favorites", faves_hidden),
+        ("My Favorites", faves_hidden),
     ];
     let z_idx = Some(create_rw_signal(1));
 
     view! {
         <LoadingWindow         pos=WindowPos::Val((20, 20))  size=(255, 255) hidden=loading_hidden  z_idx=z_idx variant=LoadingWindowVariant::HomePageLink/>
-        <LinkWindow            pos=WindowPos::Val((20, 347)) size=(255, 255) hidden=my_music_hidden z_idx=z_idx id="my-music-win" title="My Music".to_string() bg_img="/assets/wireless-nature.png" src="https://mesmr.bandcamp.com" external=true/>
-        <SpotifyPlaylistWindow pos=WindowPos::Val((310, 20)) size=(440, 582) hidden=spotify_hidden  z_idx=z_idx/>
+        <LinkWindow            pos=WindowPos::Val((20, 347)) size=(255, 255) hidden=my_music_hidden z_idx=z_idx id="my-music-win" title="My Music".to_string() bg_img="/assets/my-music.png" src="/itan"/>
+        <FavesWindow           pos=WindowPos::Val((310, 20)) size=(440, 582) hidden=faves_hidden    z_idx=z_idx/>
         <JohnWindow            pos=WindowPos::Val((20, 674)) size=(730, 90)  hidden=john_hidden     z_idx=z_idx/>
-        // <FavesWindow           pos=WindowPos::Val((785, 20)) size=(440, 746) hidden=faves_hidden    z_idx=z_idx/>
+        <SpotifyPlaylistWindow pos=WindowPos::Val((785, 20)) size=(440, 746) hidden=spotify_hidden  z_idx=z_idx/>
         <Footer items=footer_items/>
-        <GoatCounter path="/music"/>
+        <GoatCounter path="/picks"/>
     }
 }
 
@@ -157,7 +157,7 @@ fn FavesWindow(
 }
 
 #[component]
-pub fn MusicLinkWindow(
+pub fn PicksLinkWindow(
     pos: WindowPos,
     size: (u32, u32),
     hidden: RwSignal<bool>,
@@ -171,16 +171,16 @@ pub fn MusicLinkWindow(
             autoplay
             loop="true"
             poster="/assets/music-icon.png"
-            on:mousedown=move |_| leptos_router::use_navigate()("/music", Default::default())
+            on:mousedown=move |_| leptos_router::use_navigate()("/picks", Default::default())
             on:contextmenu=move |e| e.prevent_default()
             tabindex=0
-            on:keydown=move |k| if k.key() == "Enter" { leptos_router::use_navigate()("/music", Default::default()) }
+            on:keydown=move |k| if k.key() == "Enter" { leptos_router::use_navigate()("/picks", Default::default()) }
         >
             <source src="/assets/music-icon.webm" type="video/webm"/>
         </video>
     </div> });
 
     view! {
-        <Window id="music-link-win" title="Music".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx rainbow=true/>
+        <Window id="music-link-win" title="My Picks".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx rainbow=true/>
     }
 }

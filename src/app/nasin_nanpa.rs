@@ -55,6 +55,7 @@ fn NasinNanpaWindow(
                             <li><span class="title">"`nasin-nanpa-4.x.x-Helvetica.otf"</span>" - the \"Discord\" version; makes UCSUR visible in vanilla Discord"</li>
                         </ul>
                     </p>
+                    <p>"You can find the "<b>"download links"</b>" to the latest version "<ExternalLink href="https://github.com/ETBCOR/nasin-nanpa/releases/latest" display="on the GitHub releases page" bold=true/>"."</p>
                 </div> },
             ),
             (
@@ -99,7 +100,7 @@ fn NasinNanpaWindow(
                         </ul>
                     </p>
 
-                    <p>"The following glyphs have a \"long glyph\" variation too (accessed by puting "<span class="title">"START OF LONG GLYPH"</span>" / "<span class="title">"("</span>" after it): "<span class="title">"a"</span>", "<span class="title">"alasa"</span>", "<span class="title">"anu"</span>", "<span class="title">"awen"</span>", "<span class="title">"kama"</span>", "<span class="title">"ken"</span>", "<span class="title">"kepeken"</span>", "<br/><span class="title">"la"</span>" (reversed; needs "<span class="title">"END OF REVERSE LONG GLYPH"</span>" / "<span class="title">")"</span>" *before* it), "<span class="title">"lon"</span>", "<span class="title">"nanpa"</span>", "<span class="title">"open"</span>", "<span class="title">"pi"</span>", "<span class="title">"pini"</span>", "<span class="title">"sona"</span>", "<span class="title">"tawa"</span>", "<span class="title">"wile"</span>", "<span class="title">"wile"</span>" alt, "<span class="title">"n"</span>", and "<span class="title">"wa"</span>"."</p>
+                    <p>"The following glyphs have a \"long glyph\" variation too (accessed by puting "<span class="title">"START OF LONG GLYPH"</span>" / "<span class="title">"("</span>" after it): "<span class="title">"a"</span>", "<span class="title">"alasa"</span>", "<span class="title">"anu"</span>", "<span class="title">"awen"</span>", "<span class="title">"kama"</span>", "<span class="title">"ken"</span>", "<span class="title">"kepeken"</span>", "<br/><span class="title">"la"</span>" (reversed; needs "<span class="title">"END OF REVERSE LONG GLYPH"</span>" / "<span class="title">"}"</span>" *before* it), "<span class="title">"lon"</span>", "<span class="title">"nanpa"</span>", "<span class="title">"open"</span>", "<span class="title">"pi"</span>", "<span class="title">"pini"</span>", "<span class="title">"sona"</span>", "<span class="title">"tawa"</span>", "<span class="title">"wile"</span>", "<span class="title">"wile"</span>" alt, "<span class="title">"n"</span>", and "<span class="title">"wa"</span>"."</p>
                 </div> },
             ),
             (
@@ -108,30 +109,31 @@ fn NasinNanpaWindow(
                     <p>"Ligatures are a font feature that allow nasin nanpa (and many other sitelen pona fonts) to display strings of existing Unicode characters as sitelen pona glyphs. However, not every text rendering context (web browser, text editing program, etc.) supports this font feature by default, and some may not at all (so see the "<span class="title">"AHK Script Guide"</span>" tab)!"</p>
 
                     <p>"This table describes both the ligatures in nasin nanpa and the AutoHotKey scripts:"</p>
-                    // | Codepoint | Latin Character(s) | Resulting Codepoint / Glyph |
-                    // | --------- | ------------------ | --------------------------- |
-                    // | **U+F1900** -<br>**U+F1988** | `a`, `akesi` ... `wile` \| `namako` ... `ku` | _A_, `AKESI` ... `WILE` \| `NAMAKO` ... `KU` |
-                    // | **U+3000** | `  ` / `zz`| `IDEOGRAPHIC SPACE` |
-                    // | **U+F1990** | `[` | `START OF CARTOUCHE` |
-                    // | **U+F1991** | `]` | `END OF CARTOUCHE` |
-                    // | **U+F1992** | `=` | `COMBINING CARTOUCHE EXTENSION` |
-                    // | **U+F1993** | (none) | `START OF LONG PI` |
-                    // | **U+F1994** | (none) | `COMBINING LONG PI EXTENSION` |
-                    // | **U+F1995** | `-` | `STACKING JOINER` |
-                    // | **U+F1996** | `+` | `SCALING JOINER` |
-                    // | **U+F1997** | `(` | `START OF LONG GLYPH` |
-                    // | **U+F1998** | `)` | `END OF LONG GLYPH` |
-                    // | **U+F1999** | `_` | `COMBINING LONG GLYPH EXTENSION` |
-                    // | **U+F199A** | `{` | `START OF REVERSE LONG GLYPH` |
-                    // | **U+F199B** | `}` | `END OF REVERSE LONG GLYPH` |
-                    // | **U+F199C** | `.` | `MIDDLE DOT` |
-                    // | **U+F199D** | `:` | `COLON` |
-                    // | **U+FE00** -<br>**U+FE07** | `1` - `8` | `VARIATION SELECTOR 1` (`VAR01`) - `VARIATION SELECTOR 8` (`VAR08`) |
-                    // | **U+200C** | `\|` | `ZERO WIDTH NON JOINER` (`ZWNJ`) |
-                    // | **U+200D** | `&` | `ZERO WIDTH JOINER` (`ZWJ`) |
-                    // | (none) | `itan` | jan Itan's personal glyph |
-                    // | (none) | `lepeka` | jan Lepeka's personal glyph |
-                    // | (none) | `lipamanka` | lipamanka's personal glyph |
+                    <table>
+                        <tr><th>"Codepoint"</th><th>"Latin Character(s)"</th><th>"Resulting Codepoint / Glyph"</th></tr>
+                        <tr><td>"U+F1900 -"<br/>"U+F1988"</td><td>"a, akesi ... wile, namako ... ku"</td><td>"A, AKESI ... WILE, NAMAKO ... KU"</td></tr>
+                        <tr><td>"U+3000"</td><td>"[two spaces] / zz"</td><td>"IDEOGRAPHIC SPACE"</td></tr>
+                        <tr><td>"U+F1990"</td><td>"["</td><td>"START OF CARTOUCHE"</td></tr>
+                        <tr><td>"U+F1991"</td><td>"]"</td><td>"END OF CARTOUCHE"</td></tr>
+                        <tr><td>"U+F1992"</td><td>"="</td><td>"COMBINING CARTOUCHE EXTENSION"</td></tr>
+                        <tr><td>"U+F1993"</td><td>"(none)"</td><td>"START OF LONG PI"</td></tr>
+                        <tr><td>"U+F1994"</td><td>"(none)"</td><td>"COMBINING LONG PI EXTENSION"</td></tr>
+                        <tr><td>"U+F1995"</td><td>"-"</td><td>"STACKING JOINER"</td></tr>
+                        <tr><td>"U+F1996"</td><td>"+"</td><td>"SCALING JOINER"</td></tr>
+                        <tr><td>"U+F1997"</td><td>"("</td><td>"START OF LONG GLYPH"</td></tr>
+                        <tr><td>"U+F1998"</td><td>")"</td><td>"END OF LONG GLYPH"</td></tr>
+                        <tr><td>"U+F1999"</td><td>"_"</td><td>"COMBINING LONG GLYPH EXTENSION"</td></tr>
+                        <tr><td>"U+F199A"</td><td>"{"</td><td>"START OF REVERSE LONG GLYPH"</td></tr>
+                        <tr><td>"U+F199B"</td><td>"}"</td><td>"END OF REVERSE LONG GLYPH"</td></tr>
+                        <tr><td>"U+F199C"</td><td>"."</td><td>"MIDDLE DOT"</td></tr>
+                        <tr><td>"U+F199D"</td><td>":"</td><td>"COLON"</td></tr>
+                        <tr><td>"U+FE00 -"<br/>"U+FE07"</td><td>"1 - 8"</td><td>"VARIATION SELECTOR 1 (VAR01) - VARIATION SELECTOR 8 (VAR08)"</td></tr>
+                        <tr><td>"U+200C"</td><td>"|"</td><td>"ZERO WIDTH NON JOINER (ZWNJ)"</td></tr>
+                        <tr><td>"U+200D"</td><td>"&"</td><td>"ZERO WIDTH JOINER (ZWJ)"</td></tr>
+                        <tr><td>(none)</td><td>"itan"</td><td>"jan Itan's personal glyph"</td></tr>
+                        <tr><td>(none)</td><td>"lepeka"</td><td>"jan Lepeka's personal glyph"</td></tr>
+                        <tr><td>(none)</td><td>"lipamanka"</td><td>"lipamanka's personal glyph"</td></tr>
+                    </table>
                 </div> },
             ),
             (

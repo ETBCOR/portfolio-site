@@ -6,7 +6,8 @@ use rand::seq::SliceRandom;
 
 pub mod home;
 pub mod kalama_sin;
-pub mod music;
+pub mod itan;
+pub mod picks;
 pub mod nasin_nanpa;
 pub mod pakala;
 pub mod portfolio;
@@ -34,7 +35,9 @@ pub fn App() -> impl IntoView {
                 <Routes>
                     <Route path="/"               view=home::HomePageWrap/>
                     <Route path="/portfolio"      view=portfolio::PortfolioPage/>
-                    <Route path="/music"          view=music::MusicPage/>
+                    <Route path="/itan"           view=itan::ItanPage/>
+                    <Route path="/itan/wireless-nature" view=itan::WirelessNaturePage/>
+                    <Route path="/picks"          view=picks::PicksPage/>
                     <Route path="/tp"             view=tp::TokiPonaPage/>
                     <Route path="/tp/kalama_sin"  view=kalama_sin::KalamaSinPage/>
                     <Route path="/tp/nasin_nanpa" view=nasin_nanpa::NasinNanpaPage/>
@@ -586,7 +589,7 @@ fn ExternalLink(
     if bold {
         view! {
             <a class="external-link" target="_blank" href=href class:title=title_style>
-                <b style="color: black">{display}</b>
+                <b>{display}</b>
                 <span></span>
             </a>
         }

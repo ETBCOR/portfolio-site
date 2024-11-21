@@ -187,7 +187,7 @@ fn SkillsWindow(
                             " in 2018, and I've been using it to make music in my free time ever since. I've honed my production skills "
                             "quite a bit, including a few years of experimenting with other DAWs before settling on Live. "
                             "My first album is available now on Bandcamp! Check it out: "
-                            <ExternalLink href="https://mesmr.bandcamp.com/album/wireless-nature" display="Wireless Nature"/>
+                            <ExternalLink href="https://ijotananpananpa.bandcamp.com/album/wireless-nature" display="Wireless Nature"/>
                         </li>
                         <li class="spaced">
                             "I volunteered at my church for several years in high school operating the sound booth for the live band, "
