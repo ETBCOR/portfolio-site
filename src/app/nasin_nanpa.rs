@@ -1,8 +1,4 @@
-use crate::app::{
-  ExternalLink, Footer, GoatCounter, LinkWindow, LoadingWindow, LoadingWindowVariant, Webring,
-  WebringWindow, Window, WindowContent, WindowPos,
-};
-use leptos::*;
+use crate::app::*;
 
 #[component]
 pub fn NasinNanpaPage() -> impl IntoView {
@@ -145,7 +141,19 @@ fn NasinNanpaWindow(
     ],
   ));
 
-  view! {
-    <Window id="nasin-nanpa-win" title="nasin sitelen tan anpa nanpa".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "nasin-nanpa-win",
+      title: "nasin sitelen tan anpa nanpa".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      ..Default::default()
+    }
+  /> }
 }

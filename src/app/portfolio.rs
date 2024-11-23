@@ -1,8 +1,4 @@
-use crate::app::{
-  AdWindow, ExternalLink, FileLink, FileWindow, Footer, GoatCounter, LoadingWindow,
-  LoadingWindowVariant, Window, WindowContent, WindowPos,
-};
-use leptos::*;
+use crate::app::*;
 
 #[component]
 pub fn PortfolioPage() -> impl IntoView {
@@ -56,8 +52,20 @@ fn AboutWindow(
     <span class="title">"jan Itan"</span><i>" (toki pona community)"</i>". "<b>"Thanks for coming to my site!"</b>
   </p> </div> });
 
-  view! {
-    <Window id="about-win" title="About Me".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx/>
+  view! { <Window
+    base=WindowBase {
+      id: "about-win",
+      title: "About Me".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      ..Default::default()
+    }
+  />
   }
 }
 
@@ -116,9 +124,20 @@ fn EducationWindow(
     "."</p>
   </div> });
 
-  view! {
-    <Window id="education-win" title="Education".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "education-win",
+      title: "Education".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -229,9 +248,21 @@ fn SkillsWindow(
     ],
   ));
 
-  view! {
-    <Window id="skills-win" title="Skills".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "skills-win",
+      title: "Skills".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -340,7 +371,19 @@ fn ProjectsWindow(
     ],
   ));
 
-  view! {
-    <Window id="projects-win" title="Projects".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "projects-win",
+      title: "Projects".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      ..Default::default()
+    }
+  /> }
 }

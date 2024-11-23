@@ -1,10 +1,4 @@
-use std::time::Duration;
-
-use crate::app::{
-  ExternalLink, LoadingWindow, picks::PicksLinkWindow, LoadingWindowVariant, WindowPos, Window, Footer, GoatCounter
-};
-use leptos::*;
-
+use crate::app::{ *, picks::PicksLinkWindow };
 use super::WindowContent;
 
 #[component]
@@ -24,12 +18,12 @@ pub fn ItanPage() -> impl IntoView {
     <LoadingWindow   pos=WindowPos::Val((20, 20))  size=(225, 170) hidden=loading_hidden     z_idx=z_idx variant=LoadingWindowVariant::Default/>
     <PicksLinkWindow pos=WindowPos::Val((20, 262)) size=(225, 225) hidden=picks_hidden       z_idx=z_idx/> // music link window
     <AlbumWindow
+      id="wireless-nature-window"
       pos=WindowPos::Val((280, 20))
       hidden=wireless_nature_hidden
-      id=""
       title="Wireless Nature".to_string()
       img="/assets/wireless-nature.png"
-      running_length=Duration::new(10, 0)
+      running_length="an amount of time"
       bandcamp=""
       spotify=""
       z_idx=z_idx
@@ -41,15 +35,15 @@ pub fn ItanPage() -> impl IntoView {
 
 #[component]
 fn AlbumWindow(
-  pos: WindowPos,
-  hidden: RwSignal<bool>,
   id: &'static str,
   title: String,
+  pos: WindowPos,
+  hidden: RwSignal<bool>,
+  z_idx: Option<RwSignal<usize>>,
   img: &'static str,
-  running_length: Duration,
+  running_length: &'static str,
   bandcamp: &'static str,
   spotify: &'static str,
-  z_idx: Option<RwSignal<usize>>,
 ) -> impl IntoView {
   let content = WindowContent::Page(view! {
     <div style="heigh: 100%">
@@ -61,11 +55,25 @@ fn AlbumWindow(
       />
       <ExternalLink href=bandcamp display="Bandcamp"/><br/><br/>
       <ExternalLink href=spotify display="Spotify"/><br/>
+      <p>Running Length: {running_length}</p>
     </div>
   });
 
   view! {
-    <Window id=id title=title content=content pos=pos size=(467, 467).into() hidden=hidden z_idx=z_idx/>
+    <Window
+      base=WindowBase {
+        id,
+        title,
+        content,
+        pos,
+        size: (467, 467).into(),
+        hidden,
+      }
+      extra=WindowExtra {
+        z_idx,
+        ..Default::default()
+      }
+    />
   }
 }
 

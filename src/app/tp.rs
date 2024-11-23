@@ -1,8 +1,4 @@
-use crate::app::{
-  ExternalLink, FileLink, FileWindow, Footer, GoatCounter, LinkWindow, LoadingWindow,
-  LoadingWindowVariant, Webring, WebringWindow, Window, WindowContent, WindowPos,
-};
-use leptos::*;
+use crate::app::*;
 
 #[component]
 pub fn TokiPonaPage() -> impl IntoView {
@@ -101,7 +97,19 @@ fn IjoAnteWindow(
     ],
   ));
 
-  view! {
-    <Window id="ijo-ante-win" title="ijo ante".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "ijo-ante-win",
+      title: "ijo ante".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      ..Default::default()
+    }
+  /> }
 }

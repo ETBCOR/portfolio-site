@@ -1,9 +1,4 @@
-use crate::app::{
-  AdWindow, Footer, GoatCounter, JohnWindow, LinkWindow, LoadingWindow, LoadingWindowVariant,
-  Webring, WebringWindow, Window, WindowContent, WindowPos,
-};
-// use leptos::logging::log;
-use leptos::*;
+use crate::app::*;
 use web_sys::MouseEvent;
 
 #[component]
@@ -173,7 +168,20 @@ fn MetaWindow(
     </div>
   </div> });
 
-  view! {
-    <Window id="meta-win" title="Meta...".to_string() content=content pos=pos size=size hidden=hidden z_idx=Some(z_idx) min_button=Some((deeper, size)) rainbow=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "meta-win",
+      title: "Meta...".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx: Some(z_idx),
+      min_button: Some((deeper, size)),
+      rainbow: true,
+      ..Default::default()
+    }
+  /> }
 }

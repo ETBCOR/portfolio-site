@@ -1,8 +1,4 @@
-use crate::app::{
-  Footer, GoatCounter, JohnWindow, LinkWindow, LoadingWindow, LoadingWindowVariant, Window,
-  WindowContent, WindowPos,
-};
-use leptos::*;
+use crate::app::*;
 
 #[component]
 pub fn PicksPage() -> impl IntoView {
@@ -98,9 +94,22 @@ fn SpotifyPlaylistWindow(
     ],
   ));
 
-  view! {
-    <Window id="spotify-win" title="My Public Spotify Playlists".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true rainbow=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "spotify-win",
+      title: "My Public Spotify Playlists".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      rainbow: true,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -151,9 +160,22 @@ fn FavesWindow(
     ],
   ));
 
-  view! {
-    <Window id="faves-win" title="My Favorite Music".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true rainbow=true/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "faves-win",
+      title: "My Favorite Music".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      rainbow: true,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -180,7 +202,21 @@ pub fn PicksLinkWindow(
     </video>
   </div> });
 
-  view! {
-    <Window id="music-link-win" title="My Picks".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx rainbow=true/>
+  view! { <Window
+    base=WindowBase {
+      id: "music-link-win",
+      title: "My Picks".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      expandable: false,
+      rainbow: true,
+      ..Default::default()
+    }
+  />
   }
 }

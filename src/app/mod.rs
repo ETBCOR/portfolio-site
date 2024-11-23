@@ -91,25 +91,49 @@ pub enum WindowPos {
   OffsetSignal(RwSignal<(i32, i32)>),
 }
 
-#[component]
-fn Window(
+pub struct WindowBase {
   id: &'static str,
   title: String,
   content: WindowContent,
   pos: WindowPos,
   size: RwSignal<(u32, u32)>,
   hidden: RwSignal<bool>,
-  #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
-  #[prop(default = true)] expandable: bool,
-  #[prop(default = false)] expanded: bool,
-  #[prop(default = None)] min_button: Option<(RwSignal<bool>, RwSignal<(u32, u32)>)>,
-  #[prop(default = false)] diag: bool,
-  #[prop(default = false)] scroll: bool,
-  #[prop(default = false)] rainbow: bool,
-  #[prop(default = false)] diag_tp: bool,
+}
+
+pub struct WindowExtra {
+  z_idx: Option<RwSignal<usize>>,
+  expandable: bool,
+  expanded: bool,
+  min_button: Option<(RwSignal<bool>, RwSignal<(u32, u32)>)>,
+  diag: bool,
+  scroll: bool,
+  rainbow: bool,
+  diag_tp: bool,
+}
+
+impl Default for WindowExtra {
+  fn default() -> Self {
+    Self {
+      z_idx: None,
+      expandable: true,
+      expanded: false,
+      min_button: None,
+      diag: false,
+      scroll: false,
+      rainbow: false,
+      diag_tp: false,
+    }
+  }
+}
+
+#[component]
+fn Window(
+  base: WindowBase,
+  #[prop(default = WindowExtra::default())]
+  extra: WindowExtra,
 ) -> impl IntoView {
   let mut offset = false;
-  let pos = match pos {
+  let pos = match base.pos {
     WindowPos::Val(v) => create_rw_signal(v),
     WindowPos::Sig(s) => s,
     WindowPos::OffsetSignal(s) => {
@@ -119,17 +143,17 @@ fn Window(
   };
   let dpos = create_rw_signal((0, 0));
 
-  let expanded = create_rw_signal(expanded);
+  let expanded = create_rw_signal(extra.expanded);
   let this_z_idx = create_rw_signal(
-    if id.eq("ad-win") || id.eq("john-win") || !z_idx.is_some() {
+    if base.id.eq("ad-win") || base.id.eq("john-win") || !extra.z_idx.is_some() {
       0
     } else {
-      z_idx.unwrap().get_untracked()
+      extra.z_idx.unwrap().get_untracked()
     },
   );
 
   let drag = move |e: MouseEvent| {
-    if let Some(z_idx) = z_idx {
+    if let Some(z_idx) = extra.z_idx {
       z_idx.update(|z| *z = *z + 1);
       this_z_idx.set(z_idx());
     }
@@ -156,24 +180,24 @@ fn Window(
   };
 
   let get_title = move || {
-    if title.starts_with("Loading") {
-      let split: Vec<_> = title.split_whitespace().collect();
+    if base.title.starts_with("Loading") {
+      let split: Vec<_> = base.title.split_whitespace().collect();
       view! { <p class="title">
         "Loading "
         <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
           split[1].to_string()
         }</span>
       </p> }
-    } else if title.starts_with("Obtain") {
-      let split: Vec<_> = title.split_whitespace().collect();
+    } else if base.title.starts_with("Obtain") {
+      let split: Vec<_> = base.title.split_whitespace().collect();
       view! { <p class="title">
         "Obtain "
         <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
           split[1].to_string()
         }</span>
       </p> }
-    } else if title.starts_with("o pona") {
-      let split: Vec<_> = title.split_whitespace().collect();
+    } else if base.title.starts_with("o pona") {
+      let split: Vec<_> = base.title.split_whitespace().collect();
       view! { <p class="title">
         "o "
         <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
@@ -181,7 +205,7 @@ fn Window(
         }</span>
       </p> }
     } else {
-      view! { <p class="title">{&title}</p> }
+      view! { <p class="title">{&base.title}</p> }
     }
   };
 
@@ -191,8 +215,8 @@ fn Window(
         "left: {}px; top: {}px; width: {}px; height: {}px; z-index: {}",
         pos().0,
         pos().1 + if offset { 35 } else { 0 }, // add space for meta title
-        size().0,
-        size().1 + 39, // add space for title
+        (base.size)().0,
+        (base.size)().1 + 39, // add space for title
         this_z_idx()
       )
     } else {
@@ -201,22 +225,29 @@ fn Window(
   };
   let get_content_size = move || {
     if !expanded() {
-      format!("height: {}px", size().1)
+      format!("height: {}px", (base.size)().1)
     } else {
       "".to_string()
     }
   };
   let get_tab_size = move || {
     if !expanded() {
-      format!("height: {}px", size().1 - 34)
+      format!("height: {}px", (base.size)().1 - 34)
     } else {
       "".to_string()
     }
   };
 
-  let get_content = match content {
+  let get_content = match base.content {
     WindowContent::Page(content) => view! {
-      <div class="win-content" style=get_content_size class:diag={diag} class:diag-tp={diag_tp} class:scroll={scroll} class:rainbow={rainbow}>
+      <div
+        class="win-content"
+        style=get_content_size
+        class:diag={extra.diag}
+        class:diag-tp={extra.diag_tp}
+        class:scroll={extra.scroll}
+        class:rainbow={extra.rainbow}
+      >
         { content }
       </div>
     },
@@ -250,7 +281,14 @@ fn Window(
       view! {
         <div class="win-content" style=get_content_size>
           <div class="tab-titlebar">{titles}</div>
-          <div class="tab-outer" style=get_tab_size class:scroll={scroll} class:diag={diag} class:diag-tp={diag_tp} class:rainbow={rainbow}>{tabs}</div>
+          <div
+            class="tab-outer"
+            style=get_tab_size
+            class:scroll={extra.scroll}
+            class:diag={extra.diag}
+            class:diag-tp={extra.diag_tp}
+            class:rainbow={extra.rainbow}
+          >{tabs}</div>
         </div>
       }
     }
@@ -258,18 +296,18 @@ fn Window(
 
   view! {
     <div
-      id=id
+      id=base.id
       class="win-outer"
       style=get_pos_size
-      class:hidden=move || hidden()
-      class:win-expanded=move || expanded()
+      class:hidden=move || (base.hidden)()
+      class:win-expanded=move || extra.expanded
     >
       <div
         class="win-titlebar"
         on:mousedown=drag
         tabindex=0
         on:keydown=move |k| {
-          if let Some(z_idx) = z_idx {
+          if let Some(z_idx) = extra.z_idx {
             z_idx.update(|z| *z = *z + 1);
             this_z_idx.set(z_idx());
           }
@@ -286,7 +324,7 @@ fn Window(
       >
         { get_title }
         <div class="win-buttons">
-          { match min_button {
+          { match extra.min_button {
             Some((deeper, size)) => { Some(view! { <a
               class="win-min"
               title="minimize window"
@@ -296,7 +334,7 @@ fn Window(
             ></a> }) }
             None => { None } }
           }
-          { if expandable { Some(view! { <a
+          { if extra.expandable { Some(view! { <a
             class="win-expand"
             title="expand window"
             on:mousedown=move |_| expanded.update(|e| *e = !*e)
@@ -306,8 +344,8 @@ fn Window(
           <a
             class="win-close"
             title="close window"
-            on:mousedown=move |_| hidden.set(true)
-            on:keydown=move |k| if k.key() == "Enter" { hidden.set(true) }
+            on:mousedown=move |_| base.hidden.set(true)
+            on:keydown=move |k| if k.key() == "Enter" { base.hidden.set(true) }
             tabindex=0
           ></a>
         </div>
@@ -438,15 +476,20 @@ fn LoadingWindow(
 
   view! {
     <Window
-      id="loading-win"
-      title=title
-      content=content
-      pos=pos
-      size=size
-      hidden=hidden
-      expandable=false
-      z_idx=z_idx
-      rainbow=true
+      base=WindowBase {
+        id: "loading-win",
+        title,
+        content,
+        pos,
+        size,
+        hidden,
+      }
+      extra=WindowExtra {
+        expandable: false,
+        z_idx,
+        rainbow: true,
+        ..Default::default()
+      }
     />
   }
 }
@@ -464,7 +507,21 @@ fn AdWindow(
   </div> });
 
   view! {
-    <Window id="ad-win" title="Advertisement".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx/>
+    <Window
+      base=WindowBase {
+        id: "ad-win",
+        title: "Advertisement".to_string(),
+        content,
+        pos,
+        size,
+        hidden,
+      }
+      extra=WindowExtra {
+        expandable: false,
+        z_idx,
+        ..Default::default()
+      }
+    />
   }
 }
 
@@ -519,7 +576,21 @@ fn WebringWindow(
   });
 
   view! {
-    <Window id=id title=title content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx/>
+    <Window
+      base=WindowBase {
+        id,
+        title,
+        content,
+        pos,
+        size,
+        hidden,
+      }
+      extra=WindowExtra {
+        expandable: false,
+        z_idx,
+        ..Default::default()
+      }
+    />
   }
 }
 
@@ -539,7 +610,21 @@ fn JohnWindow(
   </div> });
 
   view! {
-    <Window id="john-win" title="Johnvertisement".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx/>
+    <Window
+      base=WindowBase {
+        id: "john-win",
+        title: "Johnvertisement".to_string(),
+        content,
+        pos,
+        size,
+        hidden,
+      }
+      extra=WindowExtra {
+        expandable: false,
+        z_idx,
+        ..Default::default()
+      }
+  />
   }
 }
 
@@ -553,9 +638,22 @@ fn LonelyWindow(
   let size = create_rw_signal(size);
   let content = WindowContent::Page(view! { <div tabindex=0>
   </div> });
-  view! {
-    <Window id="lonely-win" title="A bit lonely...".to_string() content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx/>
-  }
+
+  view! { <Window
+    base=WindowBase {
+      id: "lonely-win",
+      title: "A bit lonely...".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -596,9 +694,24 @@ fn LinkWindow(
     </div> }
   });
 
-  view! {
-    <Window id=id title=title content=content pos=pos size=size hidden=hidden expandable=false z_idx=z_idx rainbow={!diag && !diag_tp} diag={diag} diag_tp={diag_tp}/>
-  }
+  view! { <Window
+    base=WindowBase {
+      id,
+      title,
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      rainbow: {!diag && !diag_tp},
+      diag,
+      diag_tp,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -642,7 +755,21 @@ fn FileWindow(
   </div> });
 
   view! {
-    <Window id="file-win" title="File Viewer".to_string() content=content pos=pos size=size hidden=hidden expanded=true z_idx=z_idx/>
+    <Window
+      base=WindowBase {
+        id: "file-win",
+        title: "File Viewer".to_string(),
+        content,
+        pos,
+        size,
+        hidden,
+      }
+      extra=WindowExtra {
+        expanded: true,
+        z_idx,
+        ..Default::default()
+      }
+    />
   }
 }
 

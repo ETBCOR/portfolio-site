@@ -1,6 +1,7 @@
 use crate::app::{
   ExternalLink, FileLink, FileWindow, Footer, GoatCounter, LinkWindow, LoadingWindow,
   LoadingWindowVariant, Webring, WebringWindow, Window, WindowContent, WindowPos,
+  WindowBase, WindowExtra,
 };
 use leptos::*;
 
@@ -85,7 +86,21 @@ fn KalamaSinWindow(
     </ul>
   </div> });
 
-  view! { <Window id="kalama-sin-win" title="lipu pi kalama sin".to_string() content=content pos=pos size=size hidden=hidden z_idx=z_idx scroll=true/> }
+  view! { <Window
+    base=WindowBase {
+      id: "kalama-sin-win",
+      title: "lipu pi kalama sin".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      z_idx,
+      scroll: true,
+      ..Default::default()
+    }
+  /> }
 }
 
 // #[component]
