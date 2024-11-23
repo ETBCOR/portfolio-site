@@ -36,7 +36,6 @@ pub fn App() -> impl IntoView {
                     <Route path="/"               view=home::HomePageWrap/>
                     <Route path="/portfolio"      view=portfolio::PortfolioPage/>
                     <Route path="/itan"           view=itan::ItanPage/>
-                    <Route path="/itan/wireless-nature" view=itan::WirelessNaturePage/>
                     <Route path="/picks"          view=picks::PicksPage/>
                     <Route path="/tp"             view=tp::TokiPonaPage/>
                     <Route path="/tp/kalama_sin"  view=kalama_sin::KalamaSinPage/>

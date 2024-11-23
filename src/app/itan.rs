@@ -1,8 +1,7 @@
 use std::time::Duration;
 
-use crate::app::picks::PicksLinkWindow;
 use crate::app::{
-    ExternalLink, Footer, GoatCounter, LinkWindow, LoadingWindow, LoadingWindowProps, LoadingWindowVariant, WindowPos, Window
+    ExternalLink, LoadingWindow, picks::PicksLinkWindow, LoadingWindowVariant, WindowPos, Window, Footer, GoatCounter
 };
 use leptos::*;
 
@@ -21,17 +20,7 @@ pub fn ItanPage() -> impl IntoView {
     ];
     let z_idx = Some(create_rw_signal(1));
 
-    html::div().child(
-        LoadingWindow(LoadingWindowProps {
-            pos: WindowPos::Val((20, 20)),
-            size: (225, 170),
-            hidden: loading_hidden,
-            variant: LoadingWindowVariant::Default,
-            z_idx: z_idx,
-        })
-    )
-
-    /*view! {
+    view! {
         <LoadingWindow   pos=WindowPos::Val((20, 20))  size=(225, 170) hidden=loading_hidden         z_idx=z_idx variant=LoadingWindowVariant::Default/>
         <PicksLinkWindow pos=WindowPos::Val((20, 262)) size=(225, 225) hidden=picks_hidden           z_idx=z_idx/> // music link window
         <AlbumWindow
@@ -40,14 +29,14 @@ pub fn ItanPage() -> impl IntoView {
             id=""
             title="Wireless Nature".to_string()
             img="/assets/wireless-nature.png"
-            running_length: Duration()
-            bandcamp: "",
-            spotify: "",
+            running_length=Duration::new(10, 0)
+            bandcamp=""
+            spotify=""
             z_idx=z_idx
         />
         <Footer items=footer_items/>
         <GoatCounter path="/itan"/>
-    }*/
+    }
 }
 
 #[component]
@@ -76,7 +65,7 @@ fn AlbumWindow(
     });
 
     view! {
-        <Window id=id title=title content=content pos=pos size=(467, 467) hidden=hidden z_idx=z_idx/>
+        <Window id=id title=title content=content pos=pos size=(467, 467).into() hidden=hidden z_idx=z_idx/>
     }
 }
 
