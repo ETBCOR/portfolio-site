@@ -36,30 +36,24 @@ pub fn ItanPage() -> impl IntoView {
       z_idx=z_idx
       album=Album {
         cover: "/assets/wireless-nature.png",
-        links: AlbumLinks{
+        links: Some(AlbumLinks {
           bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
           spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
           youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
           amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
           apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
-        }
+        }),
       }
     />
     <AlbumWindow
-      id="plugdin-window"
+      id="wireless-nature-plugdin-window"
       title="Wireless Nature (Plug'din)".to_string()
-      pos=WindowPos::Val((280, 20))
+      pos=WindowPos::Val((749, 20))
       hidden=wireless_nature_hidden
       z_idx=z_idx
       album=Album {
-        cover: "/assets/wireless-nature.png",
-        links: AlbumLinks {
-          bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
-          spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
-          youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
-          amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
-          apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
-        }
+        cover: "/assets/wireless-nature-plugdin.png",
+        links: None,
       }
     />
     <Footer items=footer_items/>
@@ -77,7 +71,7 @@ struct AlbumLinks {
 
 struct Album {
   cover: &'static str,
-  links: AlbumLinks,
+  links: Option<AlbumLinks>,
 }
 
 #[component]
@@ -89,9 +83,10 @@ fn AlbumWindow(
   z_idx: Option<RwSignal<usize>>,
   album: Album,
 ) -> impl IntoView {
+  let image_link = if let Some(links) = &album.links { links.bandcamp } else { "https://ijotananpananpa.bandcamp.com/" };
   let content = WindowContent::Page(view! {
-    <div style="cursor: alias; text-align: center; height: 100%">
-      <a href={album.links.bandcamp} target="_blank" style="height: 100%">
+    <div style="text-align: center; height: 100%">
+      <a href={image_link} target="_blank" style="height: 100%">
         <img
           src=album.cover
           style="padding: 0px; height-max: 100%; max-width: 100%"
@@ -99,12 +94,16 @@ fn AlbumWindow(
           tabindex=0
         />
       </a>
+      { if let Some(links) = album.links { view! { <div>
+        <ExternalLink href=links.bandcamp display="Bandcamp"/>" "
+        <ExternalLink href=links.spotify display="Spotify"/>" "
+        <ExternalLink href=links.youtube display="YouTube"/>" "
+        <ExternalLink href=links.amazon display="Amazon"/>" "
+        <ExternalLink href=links.apple display="Apple"/>" "
+      </div> } } else { view! { <div>
+        "Coming soon!"
+      </div> } } }
       <div>
-        <ExternalLink href=album.links.bandcamp display="Bandcamp"/>" "
-        <ExternalLink href=album.links.spotify display="Spotify"/>" "
-        <ExternalLink href=album.links.youtube display="YouTube"/>" "
-        <ExternalLink href=album.links.amazon display="Amazon"/>" "
-        <ExternalLink href=album.links.apple display="Apple"/>" "
       </div>
     </div>
   });
