@@ -36,11 +36,30 @@ pub fn ItanPage() -> impl IntoView {
       z_idx=z_idx
       album=Album {
         cover: "/assets/wireless-nature.png",
-        bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
-        spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
-        youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
-        amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
-        apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
+        links: AlbumLinks{
+          bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
+          spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
+          youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
+          amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
+          apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
+        }
+      }
+    />
+    <AlbumWindow
+      id="plugdin-window"
+      title="Wireless Nature (Plug'din)".to_string()
+      pos=WindowPos::Val((280, 20))
+      hidden=wireless_nature_hidden
+      z_idx=z_idx
+      album=Album {
+        cover: "/assets/wireless-nature.png",
+        links: AlbumLinks {
+          bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
+          spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
+          youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
+          amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
+          apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
+        }
       }
     />
     <Footer items=footer_items/>
@@ -48,13 +67,17 @@ pub fn ItanPage() -> impl IntoView {
   }
 }
 
-struct Album {
-  cover: &'static str,
+struct AlbumLinks {
   bandcamp: &'static str,
   spotify: &'static str,
   youtube: &'static str,
   amazon: &'static str,
   apple: &'static str,
+}
+
+struct Album {
+  cover: &'static str,
+  links: AlbumLinks,
 }
 
 #[component]
@@ -68,7 +91,7 @@ fn AlbumWindow(
 ) -> impl IntoView {
   let content = WindowContent::Page(view! {
     <div style="cursor: alias; text-align: center; height: 100%">
-      <a href={album.bandcamp} target="_blank" style="height: 100%">
+      <a href={album.links.bandcamp} target="_blank" style="height: 100%">
         <img
           src=album.cover
           style="padding: 0px; height-max: 100%; max-width: 100%"
@@ -77,11 +100,11 @@ fn AlbumWindow(
         />
       </a>
       <div>
-        <ExternalLink href=album.bandcamp display="Bandcamp"/>" "
-        <ExternalLink href=album.spotify display="Spotify"/>" "
-        <ExternalLink href=album.youtube display="YouTube"/>" "
-        <ExternalLink href=album.amazon display="Amazon"/>" "
-        <ExternalLink href=album.apple display="Apple"/>" "
+        <ExternalLink href=album.links.bandcamp display="Bandcamp"/>" "
+        <ExternalLink href=album.links.spotify display="Spotify"/>" "
+        <ExternalLink href=album.links.youtube display="YouTube"/>" "
+        <ExternalLink href=album.links.amazon display="Amazon"/>" "
+        <ExternalLink href=album.links.apple display="Apple"/>" "
       </div>
     </div>
   });

@@ -364,6 +364,7 @@ fn Footer(
   view! {
     <div id="ale-li-pona"></div>
     <div id="nasa-a-a-a" class:hidden={!nasa}></div>
+    <div style="height: 70px"></div> // spacer in narrow view
     <footer>
       {
         items

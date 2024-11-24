@@ -66,7 +66,6 @@ pub fn PortfolioPage() -> impl IntoView {
       hidden=ad_hidden
       z_idx=Some(z_idx)
     />
-    <div style="height: 65px"></div> // spacer in narrow view
     <Footer items=footer_items/>
     <GoatCounter path="/portfolio"/>
   }
