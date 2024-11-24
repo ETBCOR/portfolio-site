@@ -728,10 +728,13 @@ fn FileWindow(
 ) -> impl IntoView {
   let size = create_rw_signal(size);
   let content = WindowContent::Page(view! { <div style="width: 100%; height: 100%">
-    <iframe
-      src=move || { if src().is_some() { hidden.set(false); } src().unwrap_or("") }
+    <object
+      data=move || { hidden.set(!src().is_some()); src().unwrap_or("") }
       allow="autoplay"
-      style="width: 100%; height: 100%"></iframe>
+      style="width: 100%; height: 100%"
+    ><p>
+      "Failed to display PDF file here, but you can "<a href="">"download"</a>" it instead if you want."
+    </p></object>
   </div> });
 
   view! { <Window

@@ -322,25 +322,66 @@ fn ProjectsWindow(
         "From CS Classes",
         view! { <div style="padding: 5px"><ul>
           <li class="spaced">
-            <ExternalLink href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20415" display="CS415 | Computational Biology: Sequence Alignment" bold=true/><br/>
+            <ExternalLink
+              href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20415"
+              display="CS415 | Computational Biology: Sequence Alignment"
+              bold=true
+            /><br/>
             "Description: \"Design and analyze algorithms that address the computational problems posed by biological sequence data, "
             "such as DNA or protein sequences.\""<br/>"Projects:"<br/>
-            <FileLink src="https://drive.google.com/file/d/17M8KI3B6rCj2_WLL-YlbxBoK0WzTyexO/preview" display="GA Simulation Runner" file_win_src=fws/>
-            " | "<ExternalLink href="https://github.com/ETBCOR/cs415/tree/main/project01" display="Github Repository"/>
-            <br/>
-            <FileLink src="https://drive.google.com/file/d/1v9XjTqRlf4iGjHskT7yp_KUyVBUU7WgE/preview" display="Parameter Set Estimation" file_win_src=fws/>
-            " | "<ExternalLink href="https://colab.research.google.com/drive/1zQtt-kDBhycueP_qyhzc9VnFeZe0wPmu?usp=sharing" display="Colab Notebook"/>
-            <br/>
-            <FileLink src="https://drive.google.com/file/d/1n-nyTQzjcGy9lpTvs-WYdBcTaDUbZfap/preview" display="Pairwise Alignment Matrix Calculation" file_win_src=fws/>
-            " | "<ExternalLink href="https://colab.research.google.com/drive/1mMGnMO63KR-wHriGNYxBxF5YNwk_r7AP?usp=sharing" display="Colab Notebook"/>
+            <FileLink
+              src="assets/pdf/CS415_1_EC.pdf"
+              display="GA Simulation Runner"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://github.com/ETBCOR/cs415/tree/main/project01"
+              display="Github Repository"
+            /><br/>
+            <FileLink
+              src="assets/pdf/CS415_3_EC.pdf"
+              display="Parameter Set Estimation"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://colab.research.google.com/drive/1zQtt-kDBhycueP_qyhzc9VnFeZe0wPmu?usp=sharing"
+              display="Colab Notebook"
+            /><br/>
+            <FileLink
+              src="assets/pdf/CS415_4_EC.pdf"
+              display="Pairwise Alignment Matrix Calculation"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://colab.research.google.com/drive/1mMGnMO63KR-wHriGNYxBxF5YNwk_r7AP?usp=sharing"
+              display="Colab Notebook"
+            />
           </li>
 
           <li class="spaced">
-            <ExternalLink href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20445" display="CS445 | Compiler Design" bold=true/><br/>
-            "In "<ExternalLink href="http://www2.cs.uidaho.edu/~mdwilder/cs445/" display="this class"/>" I fully implemented a compiler for the "<span style="white-space: nowrap">"\"C minus\""</span>" langauge (grammar specification "
-            <FileLink src="https://drive.google.com/file/d/12o5aSATedS28eJwsHIOHR7uf3DdZY20V/preview" display="here" file_win_src=fws/>
+            <ExternalLink
+              href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20445"
+              display="CS445 | Compiler Design"
+              bold=true
+            /><br/>
+            "In "
+            <ExternalLink
+              href="http://www2.cs.uidaho.edu/~mdwilder/cs445/"
+              display="this class"
+            />
+            " I fully implemented a compiler for the "
+            <span style="white-space: nowrap">"\"C minus\""</span>
+            " langauge (grammar specification "
+            <FileLink
+              src="assets/pdf/c-grammar.pdf"
+              display="here"
+              file_win_src=fws
+            />
             "). This is probably the largest solo project I've completed so far. Repository "
-            <ExternalLink href="https://github.com/ETBCOR/cs445" display="here"/>"."
+            <ExternalLink
+              href="https://github.com/ETBCOR/cs445"
+              display="here"
+            />"."
           </li>
 
           <li class="spaced">
