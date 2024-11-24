@@ -47,7 +47,7 @@ pub fn ItanPage() -> impl IntoView {
     />
     <AlbumWindow
       id="wireless-nature-plugdin-window"
-      title="Wireless Nature (Plug'din)".to_string()
+      title="Wireless Nature [Plug'din]".to_string()
       pos=WindowPos::Val((749, 20))
       hidden=wireless_nature_hidden
       z_idx=z_idx
