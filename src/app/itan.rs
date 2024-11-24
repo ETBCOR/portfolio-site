@@ -30,18 +30,31 @@ pub fn ItanPage() -> impl IntoView {
     />
     <AlbumWindow
       id="wireless-nature-window"
+      title="Wireless Nature".to_string()
       pos=WindowPos::Val((280, 20))
       hidden=wireless_nature_hidden
-      title="Wireless Nature".to_string()
-      img="/assets/wireless-nature.png"
-      running_length="an amount of time"
-      bandcamp=""
-      spotify=""
       z_idx=z_idx
+      album=Album {
+        cover: "/assets/wireless-nature.png",
+        bandcamp: "https://ijotananpananpa.bandcamp.com/album/wireless-nature",
+        spotify: "https://open.spotify.com/album/1ttWxlDv1kxizGTJpDBCXL",
+        youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lSIIgpA8_vEFSw08M2fcuRp9veDcaEfdQ",
+        amazon: "https://music.amazon.com/albums/B0DFL1NPH1",
+        apple: "https://music.apple.com/us/album/wireless-nature-ep/1765424044",
+      }
     />
     <Footer items=footer_items/>
     <GoatCounter path="/itan"/>
   }
+}
+
+struct Album {
+  cover: &'static str,
+  bandcamp: &'static str,
+  spotify: &'static str,
+  youtube: &'static str,
+  amazon: &'static str,
+  apple: &'static str,
 }
 
 #[component]
@@ -51,23 +64,24 @@ fn AlbumWindow(
   pos: WindowPos,
   hidden: RwSignal<bool>,
   z_idx: Option<RwSignal<usize>>,
-  img: &'static str,
-  running_length: &'static str,
-  bandcamp: &'static str,
-  spotify: &'static str,
+  album: Album,
 ) -> impl IntoView {
   let content = WindowContent::Page(view! {
-    <div style="heigh: 100%">
-      <img
-        src=img
-        style="padding: 0px; height: 100%; max-width: 100%"
-        draggable=false
-        tabindex=0
-      />
-      <div style="text-align: center">
-        <p>Running Length: {running_length}</p>
-        <p><ExternalLink href=bandcamp display="Bandcamp"/></p>
-        <p><ExternalLink href=spotify display="Spotify"/></p>
+    <div style="cursor: alias; text-align: center; height: 100%">
+      <a href={album.bandcamp} target="_blank" style="height: 100%">
+        <img
+          src=album.cover
+          style="padding: 0px; height-max: 100%; max-width: 100%"
+          draggable=false
+          tabindex=0
+        />
+      </a>
+      <div>
+        <ExternalLink href=album.bandcamp display="Bandcamp"/>" "
+        <ExternalLink href=album.spotify display="Spotify"/>" "
+        <ExternalLink href=album.youtube display="YouTube"/>" "
+        <ExternalLink href=album.amazon display="Amazon"/>" "
+        <ExternalLink href=album.apple display="Apple"/>" "
       </div>
     </div>
   });
@@ -79,11 +93,12 @@ fn AlbumWindow(
         title,
         content,
         pos,
-        size: (467, 567).into(),
+        size: (434, 467).into(),
         hidden,
       }
       extra=WindowExtra {
         z_idx,
+        rainbow: true,
         ..Default::default()
       }
     />
