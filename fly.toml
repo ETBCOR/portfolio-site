@@ -6,9 +6,6 @@
 app = "etbcor"
 primary_region = "phx"
 
-[build]
-image = "etbcor/personal-site:latest"
-
 [http_service]
 internal_port = 3000
 force_https = true
