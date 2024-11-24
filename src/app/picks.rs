@@ -18,11 +18,41 @@ pub fn PicksPage() -> impl IntoView {
   let z_idx = Some(create_rw_signal(1));
 
   view! {
-    <LoadingWindow     pos=WindowPos::Val((20, 20))  size=(255, 255) hidden=loading_hidden  z_idx=z_idx variant=LoadingWindowVariant::HomePageLink/>
-    <LinkWindow      pos=WindowPos::Val((20, 347)) size=(255, 255) hidden=my_music_hidden z_idx=z_idx id="my-music-win" title="My Music".to_string() bg_img="/assets/my-music.png" src="/itan"/>
-    <FavesWindow       pos=WindowPos::Val((310, 20)) size=(440, 582) hidden=faves_hidden  z_idx=z_idx/>
-    <JohnWindow      pos=WindowPos::Val((20, 674)) size=(730, 90)  hidden=john_hidden   z_idx=z_idx/>
-    <SpotifyPlaylistWindow pos=WindowPos::Val((785, 20)) size=(440, 746) hidden=spotify_hidden  z_idx=z_idx/>
+    <LoadingWindow
+      pos=WindowPos::Val((20, 20))
+      size=(255, 255)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::HomePageLink
+    />
+    <LinkWindow
+      pos=WindowPos::Val((20, 347))
+      size=(255, 255)
+      hidden=my_music_hidden
+      z_idx=z_idx
+      id="my-music-win"
+      title="My Music".to_string()
+      bg_img="/assets/my-music.png"
+      src="/itan"
+    />
+    <FavesWindow
+      pos=WindowPos::Val((310, 20))
+      size=(440, 582)
+      hidden=faves_hidden
+      z_idx=z_idx
+    />
+    <JohnWindow
+      pos=WindowPos::Val((20, 674))
+      size=(730, 90)
+      hidden=john_hidden
+      z_idx=z_idx
+    />
+    <SpotifyPlaylistWindow
+      pos=WindowPos::Val((785, 20))
+      size=(440, 746)
+      hidden=spotify_hidden
+      z_idx=z_idx
+    />
     <Footer items=footer_items/>
     <GoatCounter path="/picks"/>
   }
@@ -195,8 +225,8 @@ pub fn PicksLinkWindow(
       poster="/assets/music-icon.png"
       on:mousedown=move |_| leptos_router::use_navigate()("/picks", Default::default())
       on:contextmenu=move |e| e.prevent_default()
-      tabindex=0
       on:keydown=move |k| if k.key() == "Enter" { leptos_router::use_navigate()("/picks", Default::default()) }
+      tabindex=0
     >
       <source src="/assets/music-icon.webm" type="video/webm"/>
     </video>

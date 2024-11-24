@@ -18,11 +18,48 @@ pub fn NasinNanpaPage() -> impl IntoView {
   let z_idx = Some(create_rw_signal(1));
 
   view! {
-    <LinkWindow     pos=WindowPos::Val((20, 20))   size=(255, 255) hidden=tp_hidden      z_idx=z_idx id="tp-link-win"    title="lipu pi toki pona".to_string() bg_img="/assets/itan.svg"      src="/tp" diag_tp=true/>
-    <LinkWindow     pos=WindowPos::Val((310, 20))  size=(620, 255) hidden=link_hidden z_idx=z_idx id="nasin-nanpa-link-win" title="lon ilo GitHub".to_string() bg_img="/assets/nasin-nanpa-github-screenshot.png" src="https://github.com/ETBCOR/nasin-nanpa" external=true/>
-    <NasinNanpaWindow pos=WindowPos::Val((20, 347))  size=(910, 255) hidden=nasin_nanpa_hidden z_idx=z_idx/>
-    <WebringWindow  pos=WindowPos::Val((20, 674))  size=(720, 70)  hidden=webring_hidden   z_idx=z_idx webring=Webring::SikePona/>
-    <LoadingWindow  pos=WindowPos::Val((775, 674)) size=(155, 70)  hidden=loading_hidden   z_idx=z_idx variant=LoadingWindowVariant::TP/>
+    <LinkWindow
+      pos=WindowPos::Val((20, 20))
+      size=(255, 255)
+      hidden=tp_hidden
+      z_idx=z_idx
+      id="tp-link-win"
+      title="lipu pi toki pona".to_string()
+      bg_img="/assets/itan.svg"
+      src="/tp"
+      diag_tp=true
+    />
+    <LinkWindow
+      pos=WindowPos::Val((310, 20))
+      size=(620, 255)
+      hidden=link_hidden
+      z_idx=z_idx
+      id="nasin-nanpa-link-win"
+      title="lon ilo GitHub".to_string()
+      bg_img="/assets/nasin-nanpa-github-screenshot.png"
+      src="https://github.com/ETBCOR/nasin-nanpa"
+      external=true
+    />
+    <NasinNanpaWindow
+      pos=WindowPos::Val((20, 347))
+      size=(910, 255)
+      hidden=nasin_nanpa_hidden
+      z_idx=z_idx
+    />
+    <WebringWindow
+      pos=WindowPos::Val((20, 674))
+      size=(720, 70)
+      hidden=webring_hidden
+      z_idx=z_idx
+      webring=Webring::SikePona
+    />
+    <LoadingWindow
+      pos=WindowPos::Val((775, 674))
+      size=(155, 70)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::TP
+    />
     <Footer items=footer_items/>
     <GoatCounter path="/tp/nasin_nanpa"/>
   }
@@ -51,7 +88,10 @@ fn NasinNanpaWindow(
               <li><span class="title">"`nasin-nanpa-4.x.x-Helvetica.otf"</span>" - the \"Discord\" version; makes UCSUR visible in vanilla Discord"</li>
             </ul>
           </p>
-          <p>"You can find the "<b>"download links"</b>" to the latest version "<ExternalLink href="https://github.com/ETBCOR/nasin-nanpa/releases/latest" display="on the GitHub releases page" bold=true/>"."</p>
+          <p>
+            "You can find the "<b>"download links"</b>" to the latest version "
+            <ExternalLink href="https://github.com/ETBCOR/nasin-nanpa/releases/latest" display="on the GitHub releases page" bold=true/>"."
+          </p>
         </div> },
       ),
       (

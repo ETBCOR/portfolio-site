@@ -37,7 +37,15 @@ pub fn PakalaPage() -> impl IntoView {
   };
 
   view! {
-    <div style="background-color: black; position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: -3"></div>
+    <div style="
+      background-color: black;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      z-index: -3"
+    ></div>
     <div id="nanpa-suli">
       <video
         muted
@@ -48,7 +56,13 @@ pub fn PakalaPage() -> impl IntoView {
         <source src="/assets/nanpa-suli.webm" type="video/webm"/>
       </video>
     </div>
-    <div id="chat-bubble" class:hidden=move || chat_hidden() on:mousedown=move |_| next_msg() on:keydown=move |k| if k.key() == "Enter" { next_msg() } tabindex=0><div>
+    <div
+      id="chat-bubble"
+      class:hidden=move || chat_hidden()
+      on:mousedown=move |_| next_msg()
+      on:keydown=move |k| if k.key() == "Enter" { next_msg() }
+      tabindex=0
+    ><div>
       { move || msg() }
     </div></div>
     <Footer items=footer_items nasa=true/>

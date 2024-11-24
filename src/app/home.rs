@@ -67,13 +67,65 @@ fn HomePage(
   let z_idx = Some(z_idx);
 
   view! {
-    <LoadingWindow   pos=loading_pos   size=(225, 170) hidden=loading_hidden   z_idx=z_idx variant=LoadingWindowVariant::Default/>
-    <LinkWindow    pos=portfolio_pos size=(170, 220) hidden=portfolio_hidden z_idx=z_idx id="portfolio-link-win" title="Portfolio".to_string() bg_img="/assets/file-icon.svg" src="/portfolio"/>
-    <LinkWindow    pos=music_pos   size=(225, 225) hidden=music_hidden   z_idx=z_idx id="my-music-win" title="My Music".to_string() bg_img="/assets/my-music.png" src="/itan"/>
-    <LinkWindow    pos=tp_pos    size=(170, 178) hidden=tp_hidden    z_idx=z_idx id="tp-link-win"    title="toki pona".to_string() bg_img="/assets/itan.svg" src="/tp" diag_tp=true/>
-    <WebringWindow   pos=webring_pos   size=(430, 70)  hidden=webring_hidden   z_idx=z_idx webring=Webring::Bucket/>
-    <AdWindow    pos=ad_pos    size=(200, 100) hidden=ad_hidden    z_idx=z_idx/>
-    <MetaWindow    pos=meta_pos    size=(200, 437) hidden=meta_hidden    z_idx=z_idx.unwrap() recursions={recursions + 1} sigs=sigs/>
+    <LoadingWindow
+      pos=loading_pos
+      size=(225, 170)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::Default
+    />
+    <LinkWindow
+      pos=portfolio_pos
+      size=(170, 220)
+      hidden=portfolio_hidden
+      z_idx=z_idx
+      id="portfolio-link-win"
+      title="Portfolio".to_string()
+      bg_img="/assets/file-icon.svg"
+      src="/portfolio"
+    />
+    <LinkWindow
+      pos=music_pos
+      size=(225, 225)
+      hidden=music_hidden
+      z_idx=z_idx
+      id="my-music-win"
+      title="My Music".to_string()
+      bg_img="/assets/my-music.png"
+      src="/itan"
+    />
+    <LinkWindow
+      pos=tp_pos
+      size=(170, 178)
+      hidden=tp_hidden
+      z_idx=z_idx
+      id="tp-link-win"
+      title="toki pona".to_string()
+      bg_img="/assets/itan.svg"
+      src="/tp"
+      diag_tp=true
+    />
+    <WebringWindow
+      pos=webring_pos
+      size=(430, 70)
+      hidden=webring_hidden
+      z_idx=z_idx
+      webring=Webring::Bucket
+    />
+    <AdWindow
+      pos=ad_pos
+      size=(200, 100)
+      hidden=ad_hidden
+      z_idx=z_idx
+    />
+    <MetaWindow
+      pos=meta_pos
+      size=(200, 437)
+      hidden=meta_hidden
+      z_idx=z_idx.unwrap()
+      recursions={recursions + 1}
+      sigs=sigs
+    />
     <div class:hidden=move || {recursions > 0}>
       <div style="height: 65px"></div> // large spacer
       <Footer items=footer_items/>   // footer
@@ -115,8 +167,17 @@ pub fn HomePageWrap() -> impl IntoView {
 
   let z_idx = create_rw_signal(1);
   view! {
-    <HomePage recursions=0 z_idx=z_idx sigs=sigs/>
-    <JohnWindow    pos=john_pos    size=(665, 82)  hidden=john_hidden    z_idx=Some(z_idx)/>
+    <HomePage
+      recursions=0
+      z_idx=z_idx
+      sigs=sigs
+    />
+    <JohnWindow
+      pos=john_pos
+      size=(665, 82)
+      hidden=john_hidden
+      z_idx=Some(z_idx)
+    />
     <GoatCounter path="/"/>
   }
 }
@@ -160,9 +221,22 @@ fn MetaWindow(
     <div class="meta-meta scroll" style="height: 844px" class:hidden=move || !deeper()>
       {
         if recursions <= STACK_OVERFLOW_LIMIT {
-          view! { <div><HomePage recursions=recursions z_idx=z_idx sigs=sigs/></div> }
+          view! { <div>
+            <HomePage
+              recursions=recursions
+              z_idx=z_idx
+              sigs=sigs
+            />
+          </div> }
         } else {
-          view! { <div><LoadingWindow pos=WindowPos::Val((20, 55)) size=(300, 100) hidden=hidden variant=LoadingWindowVariant::StackOverflow/></div> }
+          view! { <div>
+            <LoadingWindow
+              pos=WindowPos::Val((20, 55))
+              size=(300, 100)
+              hidden=hidden
+              variant=LoadingWindowVariant::StackOverflow
+            />
+          </div> }
         }
       }
     </div>

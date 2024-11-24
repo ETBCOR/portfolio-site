@@ -15,8 +15,19 @@ pub fn ItanPage() -> impl IntoView {
   let z_idx = Some(create_rw_signal(1));
 
   view! {
-    <LoadingWindow   pos=WindowPos::Val((20, 20))  size=(225, 170) hidden=loading_hidden     z_idx=z_idx variant=LoadingWindowVariant::Default/>
-    <PicksLinkWindow pos=WindowPos::Val((20, 262)) size=(225, 225) hidden=picks_hidden       z_idx=z_idx/> // music link window
+    <LoadingWindow
+      pos=WindowPos::Val((20, 20))
+      size=(225, 170)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::Default
+    />
+    <PicksLinkWindow // music link window
+      pos=WindowPos::Val((20, 262))
+      size=(225, 225)
+      hidden=picks_hidden
+      z_idx=z_idx
+    />
     <AlbumWindow
       id="wireless-nature-window"
       pos=WindowPos::Val((280, 20))
@@ -53,9 +64,11 @@ fn AlbumWindow(
         draggable=false
         tabindex=0
       />
-      <ExternalLink href=bandcamp display="Bandcamp"/><br/><br/>
-      <ExternalLink href=spotify display="Spotify"/><br/>
-      <p>Running Length: {running_length}</p>
+      <div style="text-align: center">
+        <p>Running Length: {running_length}</p>
+        <p><ExternalLink href=bandcamp display="Bandcamp"/></p>
+        <p><ExternalLink href=spotify display="Spotify"/></p>
+      </div>
     </div>
   });
 
@@ -66,7 +79,7 @@ fn AlbumWindow(
         title,
         content,
         pos,
-        size: (467, 467).into(),
+        size: (467, 567).into(),
         hidden,
       }
       extra=WindowExtra {

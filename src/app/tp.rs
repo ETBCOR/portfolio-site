@@ -20,12 +20,54 @@ pub fn TokiPonaPage() -> impl IntoView {
   let z_idx = Some(create_rw_signal(1));
 
   view! {
-    <LoadingWindow pos=WindowPos::Val((20, 20))   size=(255, 255) hidden=loading_hidden   z_idx=z_idx variant=LoadingWindowVariant::TP/>
-    <LinkWindow  pos=WindowPos::Val((310, 20))  size=(300, 255) hidden=nasin_nanpa_hidden z_idx=z_idx id="nasin-nanpa-link-win" title="nasin nanpa".to_string() bg_img="/assets/nasin-nanpa.png" src="/tp/nasin_nanpa"/>
-    <LinkWindow  pos=WindowPos::Val((20, 347))  size=(255, 255) hidden=kalama_sin_hidden  z_idx=z_idx id="kalama-sin-link-win" title="kalama sin".to_string() bg_img="/assets/kalama-sin.webp" src="/tp/kalama_sin"/>
-    <IjoAnteWindow pos=WindowPos::Val((310, 347)) size=(300, 255) hidden=ijo_ante_hidden  z_idx=z_idx file_win_src=set_file_src/>
-    <FileWindow  pos=WindowPos::Val((645, 20))  size=(700, 744) hidden=file_hidden     z_idx=z_idx src=file_src/>
-    <WebringWindow pos=WindowPos::Val((20, 674))  size=(590, 70)  hidden=webring_hidden   z_idx=z_idx webring=Webring::SikePona/>
+    <LoadingWindow
+      pos=WindowPos::Val((20, 20))
+      size=(255, 255)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::TP
+    />
+    <LinkWindow
+      pos=WindowPos::Val((310, 20))
+      size=(300, 255)
+      hidden=nasin_nanpa_hidden
+      z_idx=z_idx
+      id="nasin-nanpa-link-win"
+      title="nasin nanpa".to_string()
+      bg_img="/assets/nasin-nanpa.png"
+      src="/tp/nasin_nanpa"
+    />
+    <LinkWindow
+      pos=WindowPos::Val((20, 347))
+      size=(255, 255)
+      hidden=kalama_sin_hidden
+      z_idx=z_idx
+      id="kalama-sin-link-win"
+      title="kalama sin".to_string()
+      bg_img="/assets/kalama-sin.webp"
+      src="/tp/kalama_sin"
+    />
+    <IjoAnteWindow
+      pos=WindowPos::Val((310, 347))
+      size=(300, 255)
+      hidden=ijo_ante_hidden
+      z_idx=z_idx
+      file_win_src=set_file_src
+    />
+    <FileWindow
+      pos=WindowPos::Val((645, 20))
+      size=(700, 744)
+      hidden=file_hidden
+      z_idx=z_idx
+      src=file_src
+    />
+    <WebringWindow
+      pos=WindowPos::Val((20, 674))
+      size=(590, 70)
+      hidden=webring_hidden
+      z_idx=z_idx
+      webring=Webring::SikePona
+    />
     <Footer items=footer_items/>
     <GoatCounter path="/tp"/>
   }

@@ -22,11 +22,11 @@ pub fn App() -> impl IntoView {
     <Stylesheet id="leptos" href="/pkg/personal_site.css"/>
 
     // google fonts
-    <Link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <Link href="https://fonts.gstatic.com" rel="preconnect" crossorigin=""/>
-    <Link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
-    <Link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet"/>
-    <Link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet"/>
+    <Link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <Link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+    <Link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap"/>
+    <Link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"/>
+    <Link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,600;0,700;1,600;1,700&display=swap"/>
 
 
     // main router
@@ -65,13 +65,11 @@ pub fn App() -> impl IntoView {
 #[component]
 fn GoatCounter(path: &'static str) -> impl IntoView {
   let settings = format!("{{\"path\": \"{}\"}}", path);
-  view! {
-    <script
-      data-goatcounter="https://etbcor.goatcounter.com/count"
-      data-goatcounter-settings=settings
-      async src="//gc.zgo.at/count.js">
-    </script>
-  }
+  view! { <script
+    data-goatcounter="https://etbcor.goatcounter.com/count"
+    data-goatcounter-settings=settings
+    async src="//gc.zgo.at/count.js">
+  </script> }
 }
 
 pub enum WindowContent {
@@ -180,28 +178,14 @@ fn Window(
   };
 
   let get_title = move || {
-    if base.title.starts_with("Loading") {
+    if base.title.starts_with("Loading")
+    || base.title.starts_with("Obtain")
+    || base.title.starts_with("o pona") {
       let split: Vec<_> = base.title.split_whitespace().collect();
       view! { <p class="title">
-        "Loading "
+        { split[0].to_string() } " "
         <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
-          split[1].to_string()
-        }</span>
-      </p> }
-    } else if base.title.starts_with("Obtain") {
-      let split: Vec<_> = base.title.split_whitespace().collect();
-      view! { <p class="title">
-        "Obtain "
-        <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
-          split[1].to_string()
-        }</span>
-      </p> }
-    } else if base.title.starts_with("o pona") {
-      let split: Vec<_> = base.title.split_whitespace().collect();
-      view! { <p class="title">
-        "o "
-        <span style="font-family: 'Cedarville Cursive', cursive; font-size: 12pt; font-style: oblique">{
-          split[1].to_string()
+          { split[1].to_string() }
         }</span>
       </p> }
     } else {
@@ -364,9 +348,12 @@ fn NotFoundPage() -> impl IntoView {
   }
   let loading = create_rw_signal(false);
 
-  view! {
-    <LoadingWindow pos=WindowPos::Val((20, 20)) size=(500, 500) hidden=loading variant=LoadingWindowVariant::PageNotFound/>
-  }
+  view! { <LoadingWindow
+      pos=WindowPos::Val((20, 20))
+      size=(500, 500)
+      hidden=loading
+      variant=LoadingWindowVariant::PageNotFound
+  /> }
 }
 
 #[component]
@@ -474,24 +461,22 @@ fn LoadingWindow(
     ></div>
   });
 
-  view! {
-    <Window
-      base=WindowBase {
-        id: "loading-win",
-        title,
-        content,
-        pos,
-        size,
-        hidden,
-      }
-      extra=WindowExtra {
-        expandable: false,
-        z_idx,
-        rainbow: true,
-        ..Default::default()
-      }
-    />
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "loading-win",
+      title,
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      rainbow: true,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -506,23 +491,21 @@ fn AdWindow(
     <img src="/assets/ur-ad-here.png" draggable="false"/>
   </div> });
 
-  view! {
-    <Window
-      base=WindowBase {
-        id: "ad-win",
-        title: "Advertisement".to_string(),
-        content,
-        pos,
-        size,
-        hidden,
-      }
-      extra=WindowExtra {
-        expandable: false,
-        z_idx,
-        ..Default::default()
-      }
-    />
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "ad-win",
+      title: "Advertisement".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 enum Webring {
@@ -575,23 +558,21 @@ fn WebringWindow(
     }
   });
 
-  view! {
-    <Window
-      base=WindowBase {
-        id,
-        title,
-        content,
-        pos,
-        size,
-        hidden,
-      }
-      extra=WindowExtra {
-        expandable: false,
-        z_idx,
-        ..Default::default()
-      }
-    />
-  }
+  view! { <Window
+    base=WindowBase {
+      id,
+      title,
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -609,23 +590,21 @@ fn JohnWindow(
     ></iframe>
   </div> });
 
-  view! {
-    <Window
-      base=WindowBase {
-        id: "john-win",
-        title: "Johnvertisement".to_string(),
-        content,
-        pos,
-        size,
-        hidden,
-      }
-      extra=WindowExtra {
-        expandable: false,
-        z_idx,
-        ..Default::default()
-      }
-  />
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "john-win",
+      title: "Johnvertisement".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expandable: false,
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]
@@ -725,14 +704,14 @@ fn ExternalLink(
     view! {
       <a class="external-link" target="_blank" href=href class:title=title_style>
         <b>{display}</b>
-        <span></span>
+        <span></span> // for the link-out image
       </a>
     }
   } else {
     view! {
       <a class="external-link" target="_blank" href=href class:title=title_style>
         {display}
-        <span></span>
+        <span></span> // for the link-out image
       </a>
     }
   }
@@ -754,23 +733,21 @@ fn FileWindow(
       style="width: 100%; height: 100%"></iframe>
   </div> });
 
-  view! {
-    <Window
-      base=WindowBase {
-        id: "file-win",
-        title: "File Viewer".to_string(),
-        content,
-        pos,
-        size,
-        hidden,
-      }
-      extra=WindowExtra {
-        expanded: true,
-        z_idx,
-        ..Default::default()
-      }
-    />
-  }
+  view! { <Window
+    base=WindowBase {
+      id: "file-win",
+      title: "File Viewer".to_string(),
+      content,
+      pos,
+      size,
+      hidden,
+    }
+    extra=WindowExtra {
+      expanded: true,
+      z_idx,
+      ..Default::default()
+    }
+  /> }
 }
 
 #[component]

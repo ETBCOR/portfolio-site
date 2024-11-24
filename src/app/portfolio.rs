@@ -21,13 +21,51 @@ pub fn PortfolioPage() -> impl IntoView {
   let z_idx = create_rw_signal(1);
 
   view! {
-    <LoadingWindow   pos=WindowPos::Val((435, 204)) size=(225, 202) hidden=loading_hidden   z_idx=Some(z_idx) variant=LoadingWindowVariant::HomePageLink/>
-    <AboutWindow   pos=WindowPos::Val((20, 20))   size=(640, 112) hidden=about_hidden   z_idx=Some(z_idx)/>
-    <EducationWindow pos=WindowPos::Val((20, 204))  size=(380, 572) hidden=education_hidden z_idx=Some(z_idx)/>
-    <SkillsWindow  pos=WindowPos::Val((695, 20))  size=(550, 386) hidden=skills_hidden  z_idx=Some(z_idx)/>
-    <ProjectsWindow  pos=WindowPos::Val((435, 478)) size=(810, 298) hidden=projects_hidden  z_idx=Some(z_idx) file_win_src=set_file_src/>
-    <FileWindow    pos=WindowPos::Val((1278, 20)) size=(500, 756) hidden=file_hidden    z_idx=Some(z_idx) src=file_src/>
-    <AdWindow    pos=WindowPos::Val((100, 600)) size=(200, 100) hidden=ad_hidden    z_idx=Some(z_idx)/>
+    <LoadingWindow
+      pos=WindowPos::Val((435, 204))
+      size=(225, 202)
+      hidden=loading_hidden
+      z_idx=Some(z_idx)
+      variant=LoadingWindowVariant::HomePageLink
+    />
+    <AboutWindow
+      pos=WindowPos::Val((20, 20))
+      size=(640, 112)
+      hidden=about_hidden
+      z_idx=Some(z_idx)
+    />
+    <EducationWindow
+      pos=WindowPos::Val((20, 204))
+      size=(380, 572)
+      hidden=education_hidden
+      z_idx=Some(z_idx)
+    />
+    <SkillsWindow
+      pos=WindowPos::Val((695, 20))
+      size=(550, 386)
+      hidden=skills_hidden
+      z_idx=Some(z_idx)
+    />
+    <ProjectsWindow
+      pos=WindowPos::Val((435, 478))
+      size=(810, 298)
+      hidden=projects_hidden
+      z_idx=Some(z_idx)
+      file_win_src=set_file_src
+    />
+    <FileWindow
+      pos=WindowPos::Val((1278, 20))
+      size=(500, 756)
+      hidden=file_hidden
+      z_idx=Some(z_idx)
+      src=file_src
+    />
+    <AdWindow
+      pos=WindowPos::Val((100, 600))
+      size=(200, 100)
+      hidden=ad_hidden
+      z_idx=Some(z_idx)
+    />
     <div style="height: 65px"></div> // spacer in narrow view
     <Footer items=footer_items/>
     <GoatCounter path="/portfolio"/>
@@ -42,15 +80,17 @@ fn AboutWindow(
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
 ) -> impl IntoView {
   let size = create_rw_signal(size);
-  let content = WindowContent::Page(view! { <div style="padding: 5px" tabindex=0><p>
-    "Hello! I'm Ethan (born April 2001). "
-    "Some of my passions include: making music, making software, and learning languages. Links: "
-    <ExternalLink href="http://www.discordapp.com/users/207897365141520384" display="discord"/>", "
-    <ExternalLink href="mailto:etbcor@gmail.com" display="email"/>", "
-    <ExternalLink href="https://www.github.com/ETBCOR" display="GitHub"/>". "
-    "Some names I use: "<span class="title">"etbcor"</span><i>" (username)"</i>", "<span class="title">"Friday"</span><i>" (in-person friends)"</i>", "
-    <span class="title">"jan Itan"</span><i>" (toki pona community)"</i>". "<b>"Thanks for coming to my site!"</b>
-  </p> </div> });
+  let content = WindowContent::Page(view! {
+    <div style="padding: 5px" tabindex=0><p>
+      "Hello! I'm Ethan (born April 2001). "
+      "Some of my passions include: making music, making software, and learning languages. Links: "
+      <ExternalLink href="http://www.discordapp.com/users/207897365141520384" display="discord"/>", "
+      <ExternalLink href="mailto:etbcor@gmail.com" display="email"/>", "
+      <ExternalLink href="https://www.github.com/ETBCOR" display="GitHub"/>". "
+      "Some names I use: "<span class="title">"etbcor"</span><i>" (username)"</i>", "<span class="title">"Friday"</span><i>" (in-person friends)"</i>", "
+      <span class="title">"jan Itan"</span><i>" (toki pona community)"</i>". "<b>"Thanks for coming to my site!"</b>
+    </p></div>
+  });
 
   view! { <Window
     base=WindowBase {
@@ -65,8 +105,7 @@ fn AboutWindow(
       z_idx,
       ..Default::default()
     }
-  />
-  }
+  /> }
 }
 
 #[component]

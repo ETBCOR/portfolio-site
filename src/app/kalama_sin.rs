@@ -25,12 +25,55 @@ pub fn KalamaSinPage() -> impl IntoView {
   let z_idx = Some(create_rw_signal(1));
 
   view! {
-    <LinkWindow      pos=WindowPos::Val((20, 20))   size=(255, 255) hidden=tp_hidden         z_idx=z_idx id="tp-link-win"         title="lipu pi toki pona".to_string() bg_img="/assets/itan.svg"        src="/tp" diag_tp=true/>
-    <LinkWindow      pos=WindowPos::Val((20, 347))  size=(255, 255) hidden=link_win_hidden   z_idx=z_idx id="kalama-sin-link-win" title="lon ilo RedCircle".to_string() bg_img="/assets/kalama-sin.webp" src="https://redcircle.com/shows/kalama-sin" external=true/>
-    <KalamaSinWindow pos=WindowPos::Val((310, 20))  size=(440, 582) hidden=kalama_sin_hidden z_idx=z_idx file_win_src=set_file_src/>
-    <FileWindow      pos=WindowPos::Val((782, 20))  size=(700, 744) hidden=file_hidden       z_idx=z_idx src=file_src/>
-    <WebringWindow   pos=WindowPos::Val((20, 674))  size=(430, 70)  hidden=webring_hidden    z_idx=z_idx webring=Webring::SikePona/>
-    <LoadingWindow   pos=WindowPos::Val((480, 674)) size=(270, 70)  hidden=loading_hidden    z_idx=z_idx variant=LoadingWindowVariant::TP/>
+    <LinkWindow
+      pos=WindowPos::Val((20, 20))
+      size=(255, 255)
+      hidden=tp_hidden
+      z_idx=z_idx
+      id="tp-link-win"
+      title="lipu pi toki pona".to_string()
+      bg_img="/assets/itan.svg"
+      src="/tp"
+      diag_tp=true
+    />
+    <LinkWindow
+      pos=WindowPos::Val((20, 347))
+      size=(255, 255)
+      hidden=link_win_hidden
+      z_idx=z_idx
+      id="kalama-sin-link-win"
+      title="lon ilo RedCircle".to_string()
+      bg_img="/assets/kalama-sin.webp"
+      src="https://redcircle.com/shows/kalama-sin"
+      external=true
+    />
+    <KalamaSinWindow
+      pos=WindowPos::Val((310, 20))
+      size=(440, 582)
+      hidden=kalama_sin_hidden
+      z_idx=z_idx
+      file_win_src=set_file_src
+    />
+    <FileWindow
+      pos=WindowPos::Val((782, 20))
+      size=(700, 744)
+      hidden=file_hidden
+      z_idx=z_idx
+      src=file_src/>
+    <WebringWindow
+      pos=WindowPos::Val((20, 674))
+      size=(430, 70)
+      hidden=webring_hidden
+      z_idx=z_idx
+      webring=Webring::SikePona
+    />
+    <LoadingWindow
+      pos=WindowPos::Val((480, 674))
+      size=(270, 70)
+      hidden=loading_hidden
+      z_idx=z_idx
+      variant=LoadingWindowVariant::TP
+    />
     <Footer items=footer_items/>
     <GoatCounter path="/tp/kalama_sin"/>
   }
