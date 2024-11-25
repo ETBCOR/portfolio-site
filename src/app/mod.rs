@@ -39,6 +39,10 @@ pub fn App() -> impl IntoView {
 
       <Route path="/itan"
         view=itan::ItanPage/>
+        <Route path="/itan/wireless-nature"
+          view=itan::WirelessNaturePage/>
+        <Route path="/itan/wireless-nature-plugdin"
+          view=itan::WirelessNaturePlugdinPage/>
 
       <Route path="/picks"
         view=picks::PicksPage/>
