@@ -391,18 +391,44 @@ fn ProjectsWindow(
           </li>
 
           <li class="spaced">
-            <ExternalLink href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20470" display="CS470 | Artificial Intelligence" bold=true/><br/>
+            <ExternalLink
+              href="https://catalog.uidaho.edu/courses/cs/#:~:text=CS%20470"
+              display="CS470 | Artificial Intelligence"
+              bold=true
+            /><br/>
             "This class taugh common concepts and techniques involved in artificial intelligence. Projects:"<br/>
-            <FileLink src="https://drive.google.com/file/d/1ICaQOsGKwJ7RfE21xBHvozQkfQGkw43G/preview" display="Pathfinding Algorithms" file_win_src=fws/>
-            " | "<ExternalLink href="https://github.com/ETBCOR/cs470/tree/master/proj1" display="Github Repository"/>
-            <br/>
-            <FileLink src="https://drive.google.com/file/d/1fK-F2X7uwnOk8CrDosopO1pRl6xlBc1u/preview" display="Connect-4 Bot Using Minmax" file_win_src=fws/>
-            " | "<ExternalLink href="https://github.com/ETBCOR/cs470/tree/master/proj2" display="Github Repository"/>
-            <br/>
-            <FileLink src="https://drive.google.com/file/d/1Qr5B0yZ8s3aY3Ywdd4KCYq_7y5bXfCTg/preview" display="Map Coloring Algorithms" file_win_src=fws/>
-            " | "<ExternalLink href="https://github.com/ETBCOR/cs470/tree/master/proj3" display="Github Repository"/>
-            <br/>
-            <FileLink src="https://drive.google.com/file/d/1ysXZTxxRYNOqZDYkrTWZj6VWc2TndJZR/preview" display="Modeling Genealogy in Prolog" file_win_src=fws/>
+            <FileLink
+              src="assets/pdf/CS470_1_EC.pdf"
+              display="Pathfinding Algorithms"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://github.com/ETBCOR/cs470/tree/master/proj1"
+              display="Github Repository"
+            /><br/>
+            <FileLink
+              src="assets/pdf/CS470_2_EC.pdf"
+              display="Connect-4 Bot Using Minmax"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://github.com/ETBCOR/cs470/tree/master/proj2"
+              display="Github Repository"
+            /><br/>
+            <FileLink 
+              src="assets/pdf/CS470_3_EC.pdf"
+              display="Map Coloring Algorithms"
+              file_win_src=fws
+            />" | "
+            <ExternalLink
+              href="https://github.com/ETBCOR/cs470/tree/master/proj3"
+              display="Github Repository"
+            /><br/>
+            <FileLink
+              src="assets/pdf/CS470_4_EC.pdf"
+              display="Modeling Genealogy in Prolog"
+              file_win_src=fws
+            />
           </li>
 
           <li class="spaced">

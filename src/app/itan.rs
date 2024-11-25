@@ -6,11 +6,13 @@ pub fn ItanPage() -> impl IntoView {
   let picks_hidden = create_rw_signal(false);
   let loading_hidden = create_rw_signal(false);
   let wireless_nature_hidden = create_rw_signal(false);
+  let wireless_nature_plugdin_hidden = create_rw_signal(false);
 
   let footer_items = vec![
     ("\"Inspiration\"", loading_hidden),
     ("My Picks", picks_hidden),
     ("Wireless Nature", wireless_nature_hidden),
+    ("[Plug'din]", wireless_nature_plugdin_hidden),
   ];
   let z_idx = Some(create_rw_signal(1));
 
@@ -49,7 +51,7 @@ pub fn ItanPage() -> impl IntoView {
       id="wireless-nature-plugdin-window"
       title="Wireless Nature [Plug'din]".to_string()
       pos=WindowPos::Val((749, 20))
-      hidden=wireless_nature_hidden
+      hidden=wireless_nature_plugdin_hidden
       z_idx=z_idx
       album=Album {
         cover: "/assets/wireless-nature-plugdin.png",
