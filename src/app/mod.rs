@@ -737,7 +737,7 @@ fn FileWindow(
       allow="autoplay"
       style="width: 100%; height: 100%"
     ><p>
-      "Failed to display PDF file here, but you can "<a href="">"download"</a>" it instead if you want."
+      "Failed to display PDF file here, but you can "<a href=move || { src().unwrap_or("") }>"download"</a>" it instead if you want."
     </p></object>
   </div> });
 
@@ -751,7 +751,7 @@ fn FileWindow(
       hidden,
     }
     extra=WindowExtra {
-      expanded: true,
+      expanded: false,
       z_idx,
       ..Default::default()
     }

@@ -95,9 +95,31 @@ fn IjoAnteWindow(
           <ul>
             <li>"nasin sitelen tan anpa nanpa (lon sewi ↑)"</li>
             <li>"sitelen toki pi kalama sin (lon poka ←)"</li>
-            <li><FileLink src="https://docs.google.com/document/d/11rCtIptD3cQybXXYDv2S8ozZINYdIPx96BDM1yE2OU8/preview" display="\"kala pi alasa kala\" — toki musi" file_win_src=fws/></li>
-            <li><FileLink src="https://docs.google.com/document/d/1FgoMDYm_R1mOZxF5fEFpc1-FzUG1lKJLWcIcyRMnzTU/preview" display="\"mu namako\" — toki musi" file_win_src=fws/></li>
-            <li><FileLink src="https://docs.google.com/document/d/163dd0cseeR3qIpuRXlWZQClEbuLEAj3W7KRoXIo0b74/preview" display="ijo (nasa) tan anpa nanpa — toki nasa mute" file_win_src=fws/></li>
+            <li>
+              "\"kala pi alasa kala\" — toki musi ("
+              <FileLink
+                src="assets/pdf/tomutan-kala-pi-alasa-kala.pdf"
+                display="sitelen Lasina"
+                file_win_src=fws
+              />
+              " | "
+              <FileLink
+                src="assets/pdf/tomutan-kala-pi-alasa-kala-sitelen-pona.pdf"
+                display="sitelen pona"
+                file_win_src=fws
+              />
+              ")"
+            </li>
+            <li><FileLink
+              src="assets/pdf/tomutan-mu-namako.pdf"
+              display="\"mu namako\" — toki musi"
+              file_win_src=fws
+            /></li>
+            <li><FileLink
+              src="assets/pdf/tomutan-tonatan.pdf"
+              display="ijo (nasa) tan anpa nanpa — toki nasa mute"
+              file_win_src=fws
+            /></li>
           </ul>
         </p></div> },
       ),
