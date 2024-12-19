@@ -1,34 +1,49 @@
-#[cfg(feature = "ssr")]
-#[actix_web::main]
+// #[cfg(feature = "ssr")]
+// #[actix_web::main]
 async fn main() -> std::io::Result<()> {
   use actix_files::Files;
   use actix_web::*;
-  use leptos::*;
+  use leptos::prelude::*;
+  use leptos::config::get_configuration;
   use leptos_actix::{generate_route_list, LeptosRoutes};
   use personal_site::app::*;
 
   let conf = get_configuration(None).await.unwrap();
   let addr = conf.leptos_options.site_addr;
-  // Generate the list of routes in your Leptos App
-  let routes = generate_route_list(|| view! { <App/> });
 
   HttpServer::new(move || {
+    let routes = generate_route_list(App);
     let leptos_options = &conf.leptos_options;
-    let site_root = &leptos_options.site_root;
+    let site_root = &leptos_options.site_root.clone().to_string();
+
+    println!("mi kute lon httpss://{}", &addr);
 
     App::new()
-      .route("/api/{tail:.*}", leptos_actix::handle_server_fns())
       // serve JS/WASM/CSS from `pkg`
       .service(Files::new("/pkg", format!("{site_root}/pkg")))
       // serve other assets from the `assets` directory
-      .service(Files::new("/assets", site_root))
+      .service(Files::new("/assets", &site_root))
       // serve the favicon from /favicon.ico
       .service(favicon)
-      .leptos_routes(
-        leptos_options.to_owned(),
-        routes.to_owned(),
-        || view! { <App/> },
-      )
+      .leptos_routes(routes, {
+        let leptos_options = leptos_options.clone();
+        move || {
+          view! {
+            <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <AutoReload options=leptos_options.clone() />
+                <HydrationScripts options=leptos_options.clone() />
+                <MetaTags />
+              </head>
+              <body>
+                <App />
+              </body>
+          }
+        }
+      })
       .app_data(web::Data::new(leptos_options.to_owned()))
     //.wrap(middleware::Compress::default())
   })
@@ -62,15 +77,9 @@ pub fn main() {
   // a client-side main function is required for using `trunk serve`
   // prefer using `cargo leptos serve` instead
   // to run: `trunk serve --open --features ssg`
-  use leptos::*;
-  use leptos_start::app::*;
-  use wasm_bindgen::prelude::wasm_bindgen;
+  use personal_site::app::*;
 
   console_error_panic_hook::set_once();
 
-  leptos::mount_to_body(move || {
-    // note: for testing it may be preferrable to replace this with a
-    // more specific component, although leptos_router should still work
-    view! { <App/> }
-  });
+  leptos::mount_to_body(App);
 }

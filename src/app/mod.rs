@@ -1,6 +1,10 @@
-use leptos::{ev::MouseEvent, *};
-use leptos_meta::*;
-use leptos_router::*;
+use leptos::{ prelude::*, html::*, ev::* };
+use leptos_meta::{provide_meta_context, Stylesheet, Title};
+use leptos_router::{
+  components::{Route, Router, Routes},
+  StaticSegment, WildcardSegment,
+  hooks::use_navigate,
+};
 use leptos_use::{use_event_listener, use_event_listener_with_options, UseEventListenerOptions};
 use rand::seq::SliceRandom;
 
@@ -18,8 +22,9 @@ pub fn App() -> impl IntoView {
   provide_meta_context();
 
   view! {
-    <Title text="etbcor's website"/>
     <Stylesheet id="leptos" href="/pkg/personal_site.css"/>
+
+    <Title text="etbcor's website"/>
 
     // google fonts
     <Link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -30,36 +35,38 @@ pub fn App() -> impl IntoView {
 
 
     // main router
-    <Router><main><Routes>
-      <Route path="/"
+    <Router><main><Routes fallback=move || "Not found.">
+      <Route path=StaticSegment("")
         view=home::HomePageWrap/>
 
-      <Route path="/portfolio"
+      <Route path=StaticSegment("portfolio")
         view=portfolio::PortfolioPage/>
 
-      <Route path="/itan"
+      <Route path=StaticSegment("itan")
         view=itan::ItanPage/>
-        <Route path="/itan/wireless-nature"
+
+        <Route path=StaticSegment("itan/wireless-nature")
           view=itan::WirelessNaturePage/>
-        <Route path="/itan/wireless-nature-plugdin"
+
+        <Route path=StaticSegment("itan/wireless-nature-plugdin")
           view=itan::WirelessNaturePlugdinPage/>
 
-      <Route path="/picks"
+      <Route path=StaticSegment("picks")
         view=picks::PicksPage/>
 
-      <Route path="/tp"
+      <Route path=StaticSegment("tp")
         view=tp::TokiPonaPage/>
 
-      <Route path="/tp/kalama_sin"
-        view=kalama_sin::KalamaSinPage/>
+        <Route path=StaticSegment("tp/kalama_sin")
+          view=kalama_sin::KalamaSinPage/>
 
-      <Route path="/tp/nasin_nanpa"
-        view=nasin_nanpa::NasinNanpaPage/>
+        <Route path=StaticSegment("tp/nasin_nanpa")
+          view=nasin_nanpa::NasinNanpaPage/>
 
-      <Route path="/pakala"
+      <Route path=StaticSegment("pakala")
         view=pakala::PakalaPage/>
 
-      <Route path="/*any"
+      <Route path=WildcardSegment("any")
         view=NotFoundPage/>
 
     </Routes><Cyberpunk/></main></Router>
@@ -77,11 +84,11 @@ fn GoatCounter(path: &'static str) -> impl IntoView {
 }
 
 pub enum WindowContent {
-  Page(HtmlElement<html::Div>),
+  Page(HtmlElement<Div, (), ()>),
   Tabs(
     (
       RwSignal<&'static str>,
-      Vec<(&'static str, HtmlElement<html::Div>)>,
+      Vec<(&'static str, HtmlElement<Div, (), ()>)>,
     ),
   ),
 }
@@ -136,17 +143,17 @@ fn Window(
 ) -> impl IntoView {
   let mut offset = false;
   let pos = match base.pos {
-    WindowPos::Val(v) => create_rw_signal(v),
+    WindowPos::Val(v) => RwSignal::new(v),
     WindowPos::Sig(s) => s,
     WindowPos::OffsetSignal(s) => {
       offset = true;
       s
     }
   };
-  let dpos = create_rw_signal((0, 0));
+  let dpos = RwSignal::new((0, 0));
 
-  let expanded = create_rw_signal(extra.expanded);
-  let this_z_idx = create_rw_signal(
+  let expanded = RwSignal::new(extra.expanded);
+  let this_z_idx = RwSignal::new(
     if base.id.eq("ad-win") || base.id.eq("john-win") || !extra.z_idx.is_some() {
       0
     } else {
@@ -154,7 +161,7 @@ fn Window(
     },
   );
 
-  let drag = move |e: MouseEvent| {
+  let dragWin = move |e: MouseEvent| {
     if let Some(z_idx) = extra.z_idx {
       z_idx.update(|z| *z = *z + 1);
       this_z_idx.set(z_idx());
@@ -162,7 +169,7 @@ fn Window(
 
     let (x, y) = pos.get_untracked();
     dpos.set((x - e.client_x(), y - e.client_y()));
-    let drag_cleanup = use_event_listener(document(), ev::mousemove, move |e| {
+    let drag_cleanup = use_event_listener(document(), mousemove, move |e| {
       if !expanded.get_untracked() {
         let (dx, dy) = dpos.get_untracked();
         pos.set((e.client_x() + dx, e.client_y() + dy))
@@ -173,7 +180,7 @@ fn Window(
     once_opt.once(true);
     let _ = use_event_listener_with_options(
       document(),
-      ev::mouseup,
+      mouseup,
       move |_| {
         drag_cleanup();
       },
@@ -292,7 +299,7 @@ fn Window(
     >
       <div
         class="win-titlebar"
-        on:mousedown=drag
+        on:mousedown=dragWin
         tabindex=0
         on:keydown=move |k| {
           if let Some(z_idx) = extra.z_idx {
@@ -350,7 +357,7 @@ fn NotFoundPage() -> impl IntoView {
     let resp = expect_context::<leptos_actix::ResponseOptions>();
     resp.set_status(actix_web::http::StatusCode::NOT_FOUND);
   }
-  let loading = create_rw_signal(false);
+  let loading = RwSignal::new(false);
 
   view! { <LoadingWindow
       pos=WindowPos::Val((20, 20))
@@ -439,7 +446,7 @@ fn LoadingWindow(
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
   variant: LoadingWindowVariant,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
 
   let mut rng = rand::thread_rng();
   let noun: &'static str = ABSTRACT_NOUNS.choose(&mut rng).unwrap();
@@ -459,8 +466,8 @@ fn LoadingWindow(
     <div
       class="loading-img"
       class:wait={variant == LoadingWindowVariant::Default}
-      on:mousedown=move |_| leptos_router::use_navigate()(if variant == LoadingWindowVariant::StackOverflow { "/pakala" } else { "/" }, Default::default(),)
-      on:keydown=move |k| if k.key() == "Enter" { leptos_router::use_navigate()(if variant == LoadingWindowVariant::StackOverflow { "/pakala" } else { "/" }, Default::default(),) }
+      on:mousedown=move |_| use_navigate()(if variant == LoadingWindowVariant::StackOverflow { "/pakala" } else { "/" }, Default::default(),)
+      on:keydown=move |k| if k.key() == "Enter" { use_navigate()(if variant == LoadingWindowVariant::StackOverflow { "/pakala" } else { "/" }, Default::default(),) }
       tabindex=0
       title="ale li pona"
     ></div>
@@ -491,7 +498,7 @@ fn AdWindow(
   hidden: RwSignal<bool>,
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let content = WindowContent::Page(view! { <div style="cursor: wait">
     <img src="/assets/ur-ad-here.png" draggable="false"/>
   </div> });
@@ -526,7 +533,7 @@ fn WebringWindow(
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
   webring: Webring,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let id = match webring {
     Webring::Bucket => "bucket-webring-win",
     Webring::SikePona => "sike-pona-webring-win",
@@ -587,7 +594,7 @@ fn JohnWindow(
   hidden: RwSignal<bool>,
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let content = WindowContent::Page(view! { <div class="rainbow">
      <iframe
       src="https://john.citrons.xyz/embed?ref=etbcor.com"
@@ -619,7 +626,7 @@ fn LonelyWindow(
   hidden: RwSignal<bool>,
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let content = WindowContent::Page(view! { <div tabindex=0>
   </div> });
 
@@ -654,7 +661,7 @@ fn LinkWindow(
   #[prop(default = false)] diag_tp: bool,
   #[prop(default = false)] external: bool,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let content = WindowContent::Page(if external {
     view! { <div style="cursor: alias; text-align: center; height: 100%">
       <a href=src target="_blank" style="height: 100%">
@@ -671,8 +678,8 @@ fn LinkWindow(
         src=bg_img
         style="padding: 0px; height: 100%; max-width: 100%"
         draggable=false
-        on:mousedown=move |_| leptos_router::use_navigate()(src, Default::default())
-        on:keydown=move |k| if k.key() == "Enter" { leptos_router::use_navigate()(src, Default::default()) }
+        on:mousedown=move |_| use_navigate()(src, Default::default())
+        on:keydown=move |k| if k.key() == "Enter" { use_navigate()(src, Default::default()) }
         tabindex=0
       />
     </div> }
@@ -730,7 +737,7 @@ fn FileWindow(
   #[prop(default = None)] z_idx: Option<RwSignal<usize>>,
   src: ReadSignal<Option<&'static str>>,
 ) -> impl IntoView {
-  let size = create_rw_signal(size);
+  let size = RwSignal::new(size);
   let content = WindowContent::Page(view! { <div style="width: 100%; height: 100%">
     <object
       data=move || { hidden.set(!src().is_some()); src().unwrap_or("") }
