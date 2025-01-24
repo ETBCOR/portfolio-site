@@ -16,7 +16,7 @@ leptos = { version = "0.6.15", features = ["nightly"] }
 leptos_meta = { version = "0.6.15", features = ["nightly"] }
 leptos_actix = { version = "0.6.15", optional = true }
 leptos_router = { version = "0.6.15", features = ["nightly"] }
-wasm-bindgen = { version = "0.2.93", optional = true }
+wasm-bindgen = { version = "0.2.100", optional = true }
 leptos-use = { version = "0.13.4" }
 web-sys = "0.3"
 rand = "0.8"
