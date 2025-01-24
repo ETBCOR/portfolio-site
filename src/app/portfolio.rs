@@ -376,10 +376,7 @@ fn SkillsWindow(
     </li>
   </ul></div> });
 
-  let content = WindowContent::Tabs((
-    active_tab,
-    vec![technical, av, other],
-  ));
+  let content = WindowContent::Tabs((active_tab, vec![technical, av, other]));
 
   view! { <Window
     base=WindowBase {
@@ -566,17 +563,29 @@ fn ProjectsWindow(
       <ExternalLink
         href="https://leptos.dev/"
         display="leptos"
+        title_style=true
       />
       " (a full-stack web framework built in "
-      <ExternalLink
-        href="https://www.rust-lang.org/"
-        display="Rust"
-      />")."
+      <span class="title">"Rust"</span>
+      ")."
     </li>
 
     <li class="spaced">
-      "I designed a "<b>"sitelen pona"</b>
-      " font (the writing system of a constructed language). "
+      "I designed (and contiue to work on) an OpenType font for "<b>"sitelen pona"</b>
+      " (the writing system of "
+      <ExternalLink
+        href="https://tokipona.org"
+        display="toki pona"
+        title_style=true
+      />", the constructed language) called "
+      <ExternalLink
+        href="/tp/nasin_nanpa"
+        display="nasin sitelen tan anpa nanpa."
+      />
+      " I designed the glyphs in Figma, then made a script in Rust to generate a FontForge file, "
+      "which then allows me to generate several variants of the font for use in different contexts. "
+      "The font makes use of quite a few advanced OpenType features, enabling the rendering of each word glyph "
+      "in its normal form, in a cartouce for writing names, and in stacking / scaling combo glyphs. "
       <ExternalLink
         href="https://github.com/ETBCOR/nasin-nanpa"
         display="Repository"
@@ -600,10 +609,7 @@ fn ProjectsWindow(
     <li>"I have worked on quite a few other projects, both personal projects and projects for school (this list is nonexhaustive)."</li>
   </ul></div> });
 
-  let content = WindowContent::Tabs((
-    active_tab,
-    vec![cs_classes, other],
-  ));
+  let content = WindowContent::Tabs((active_tab, vec![cs_classes, other]));
 
   view! { <Window
     base=WindowBase {

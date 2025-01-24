@@ -353,10 +353,10 @@ fn NotFoundPage() -> impl IntoView {
   let loading = create_rw_signal(false);
 
   view! { <LoadingWindow
-      pos=WindowPos::Val((20, 20))
-      size=(500, 500)
-      hidden=loading
-      variant=LoadingWindowVariant::PageNotFound
+    pos=WindowPos::Val((20, 20))
+    size=(500, 500)
+    hidden=loading
+    variant=LoadingWindowVariant::PageNotFound
   /> }
 }
 
